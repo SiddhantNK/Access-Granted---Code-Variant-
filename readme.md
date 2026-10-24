@@ -137,21 +137,29 @@ The goal is not to replace project-management tools. The goal is to give unfinis
 
 
   <br/>
+  <br/>
+  <br/>
 
 
   <img src="/Assests/main_dashboard.png" alt="Main Page" width="800"/>
 
 
   <br/>
+  <br/>
+  <br/>
 
 
 <img src="/Assests/Drag_and_drop.png" alt="The surprise challenge" width="800"/>
 
   <br/>
+  <br/>
+  <br/>
 
   <img src="/Assests/sample_project.png" alt="Sample project" width="800"/>
 
   
+  <br/>
+  <br/>
   <br/>
 
 
@@ -307,60 +315,55 @@ Authentication and data storage are frontend-only in this prototype. Use the exp
 
 ## Project Structure
 
-├── Assests/
-│   ├── Prjct_logo.png
-│   └── technical_approach.png
+## Project Structure
+
+```text
+project-graveyard/
 ├── src/
-│   ├── components/
-│   │   ├── GhostMascot.jsx
-│   │   ├── IntroWalkthrough.jsx
-│   │   └── Navbar.jsx
-│   ├── context/
-│   │   ├── AuthContext.jsx
-│   │   ├── IntroContext.jsx
-│   │   ├── ProjectContext.jsx
-│   │   └── ThemeContext.jsx
-│   ├── pages/
-│   │   ├── Crypt.jsx
-│   │   ├── Dashboard.jsx
-│   │   └── LandingPage.jsx
+│   ├── components/   # Shared UI and Canvas Protocol components
+│   ├── context/      # Authentication, projects, theme, and intro state
+│   ├── pages/        # Application screens
 │   ├── AppUpdated.jsx
 │   ├── index.css
-│   ├── main.jsx
-│   └── tailwind.config.js
-├── .env.example
-├── .eslintrc.cjs
-├── .gitignore
+│   └── main.jsx
 ├── index.html
-├── LICENSE
 ├── package.json
-├── postcss.config.js
-├── readme.md
-└── vite.config.js
+└── tailwind.config.js
+```
 
+<details>
+<summary>View the full source structure</summary>
 
-## Screenshots
+```text
+src/
+├── components/
+│   ├── canvas/
+│   │   ├── ActionZone.jsx
+│   │   ├── DraggableProjectCard.jsx
+│   │   └── GraveyardCanvas.jsx
+│   ├── GhostMascot.jsx
+│   ├── IntroWalkthrough.jsx
+│   ├── Navbar.jsx
+│   ├── NewBurialModal.jsx
+│   └── RoamingGhost.jsx
+├── context/
+│   ├── AuthContext.jsx
+│   ├── IntroContext.jsx
+│   ├── ProjectContext.jsx
+│   └── ThemeContext.jsx
+├── pages/
+│   ├── Autopsy.jsx
+│   ├── Crypt.jsx
+│   ├── Dashboard.jsx
+│   ├── GraveView.jsx
+│   ├── LandingPage.jsx
+│   └── RevivePage.jsx
+├── AppUpdated.jsx
+├── index.css
+└── main.jsx
+```
 
-
-<div align="center">
-
-
-  <img src="assets/screenshot-1.png" alt="Screenshot 1" width="800"/>
-
-
-  <br/>
-
-
-  <img src="assets/screenshot-2.png" alt="Screenshot 2" width="800"/>
-
-
-  <br/>
-
-
-  <img src="assets/screenshot-3.png" alt="Screenshot 3" width="800"/>
-
-
-</div>
+</details>
 
 
 ## Results

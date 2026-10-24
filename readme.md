@@ -7,7 +7,8 @@
   <h1>PROJECT GRAVEYARD</h1>
 
 
-  <p>Forgot why you working on particular project long time back ..... Rebuild, Archive or Share the idea with others the idea you were working on and give your project a new life  </p>
+  <p>  Save what you’ve built, remember why you paused, and decide what comes next:
+  revive the idea, reuse what still works, or let it rest. </p>
 
 
 </div>
@@ -125,49 +126,68 @@ The goal is not to replace project-management tools. The goal is to give unfinis
   Users can switch between a more atmospheric dark theme and a lighter, less spooky theme. The preference is saved locally.
 
 
-<!-- 
+
 ## Demo
 
 
 <div align="center">
 
 
-  <img src="assets/demo-1.png" alt="Demo Image 1" width="800"/>
+  <img src="/Assests/authentication_pg.png" alt="Landing Page" width="800"/>
 
 
   <br/>
 
 
-  <img src="assets/demo-2.png" alt="Demo Image 2" width="800"/>
+  <img src="/Assests/main_dashboard.png" alt="Main Page" width="800"/>
 
 
   <br/>
 
 
-  <img src="assets/demo-3.png" alt="Demo Image 3" width="800"/>
+<img src="/Assests/Drag_and_drop.png" alt="The surprise challenge" width="800"/>
+
+  <br/>
+
+  <img src="/Assests/sample_project.png" alt="Sample project" width="800"/>
+
+  
+  <br/>
 
 
-</div> -->
+<img src="/Assests/creating_newburial.png" alt="Creating New Burial" width="800"/>
+  
+  
+
+
+</div>
 
 
 ## Tech Stack
 <div align = "center">
 <img src="/Assests/technical_approach.png" alt="Tech stack" height="800" width="600">
 </div>
-<!-- Add technologies here -->
 
 
-<!-- ## Architecture
+
+## Architecture
 
 
-<div align="center">
 
+The application is a frontend prototype. React pages and components use shared context for application state, while React Router handles navigation. Project and preference data are stored in the browser.
 
-  <img src="assets/architecture.png" alt="Architecture Diagram" width="800"/>
+```mermaid
+flowchart TD
+    A[React UI: Pages and Components] --> B[React Router]
+    A --> C[Auth Context]
+    A --> D[Project Context]
+    A --> E[Theme Context]
+    C --> F[(Browser localStorage)]
+    D --> F
+    E --> F
+```
 
-
-</div> -->
-
+Authentication in this prototype is simulated in the frontend; it is not a production identity or security system.
 
 ## Installation
 
@@ -270,14 +290,53 @@ npm run preview
 ```
 
 
-<!-- ## Usage
+## Usage
 
+1. Start the app locally using the installation instructions above.
+2. Create an account or sign in to enter the app.
+3. Choose **New Burial** to record an unfinished project and preserve its context.
+4. Use the Dashboard to browse projects in Canvas Protocol or Grid View.
+5. Open a project dossier to review its details and timeline.
+6. Use search and filters in the Crypt to find saved projects.
+7. Choose a project action—such as reviving, archiving, restoring, or exporting—when appropriate.
+8. Switch between light and dark themes using the theme control.
+
+Authentication and data storage are frontend-only in this prototype. Use the export feature to keep a JSON copy of your data.
 
 
 
 ## Project Structure
 
-
+├── Assests/
+│   ├── Prjct_logo.png
+│   └── technical_approach.png
+├── src/
+│   ├── components/
+│   │   ├── GhostMascot.jsx
+│   │   ├── IntroWalkthrough.jsx
+│   │   └── Navbar.jsx
+│   ├── context/
+│   │   ├── AuthContext.jsx
+│   │   ├── IntroContext.jsx
+│   │   ├── ProjectContext.jsx
+│   │   └── ThemeContext.jsx
+│   ├── pages/
+│   │   ├── Crypt.jsx
+│   │   ├── Dashboard.jsx
+│   │   └── LandingPage.jsx
+│   ├── AppUpdated.jsx
+│   ├── index.css
+│   ├── main.jsx
+│   └── tailwind.config.js
+├── .env.example
+├── .eslintrc.cjs
+├── .gitignore
+├── index.html
+├── LICENSE
+├── package.json
+├── postcss.config.js
+├── readme.md
+└── vite.config.js
 
 
 ## Screenshots
@@ -306,11 +365,16 @@ npm run preview
 
 ## Results
 
+The Project Graveyard provides a frontend prototype for documenting unfinished projects, preserving project context, and exploring possible next steps. Project data and preferences are stored locally in the browser.
 
 
-
-## Future Improvements -->
-
+## Future Improvements
+- Add automated tests for key project workflows.
+- Improve accessibility and keyboard support for Canvas Protocol interactions.
+- Continue refining mobile layouts and touch interactions.
+- Strengthen validation and error feedback for data import.
+- Explore additional export formats.
+- Consider secure backend authentication and synced storage if the project moves beyond a frontend prototype.
 
 
 
@@ -378,7 +442,7 @@ git push origin feature/your-feature-name
 
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.   
-<!-- Add license information here -->
+
 
 
 
@@ -386,7 +450,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 <div align="center">
 
 
-<sub>Built with ❤️by Fellow Hoomans </sub>
+<sub>Built with ❤️ by Sid </sub>
 
 
 </div>

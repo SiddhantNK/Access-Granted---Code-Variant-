@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Plus, Search, Clock, Moon, Sparkles, Archive, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import GhostMascot from '../components/GhostMascot';
 import NewBurialModal from '../components/NewBurialModal';
+import GraveyardCanvas from '../components/canvas/GraveyardCanvas';
 import { useProjects } from '../context/ProjectContext';
 import { useAuth } from '../context/AuthContext';
 
@@ -99,6 +100,8 @@ const Dashboard = () => {
     </Link>
   );
 
+  const [viewMode, setViewMode] = useState('canvas'); // 'canvas' | 'grid'
+
   return (
     <div className="min-h-screen bg-theme-bg text-theme-text transition-colors duration-200">
       
@@ -133,6 +136,33 @@ const Dashboard = () => {
                   <span className="text-[11px] font-mono text-theme-accent font-medium">Welcome back!</span>
                 </div>
               )}
+              
+              {/* View Mode Toggle */}
+              <div className="flex items-center bg-theme-surface-secondary p-0.5 rounded-lg border border-theme-border text-xs">
+                <button
+                  type="button"
+                  onClick={() => setViewMode('canvas')}
+                  className={`px-2.5 py-1 rounded-md transition-colors font-mono ${
+                    viewMode === 'canvas'
+                      ? 'bg-theme-surface text-theme-text font-semibold shadow-sm'
+                      : 'text-theme-text-muted hover:text-theme-text'
+                  }`}
+                >
+                  Canvas Protocol
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('grid')}
+                  className={`px-2.5 py-1 rounded-md transition-colors font-mono ${
+                    viewMode === 'grid'
+                      ? 'bg-theme-surface text-theme-text font-semibold shadow-sm'
+                      : 'text-theme-text-muted hover:text-theme-text'
+                  }`}
+                >
+                  Grid View
+                </button>
+              </div>
+
               <Link
                 to="/crypt"
                 className="px-3.5 py-2 rounded-lg border border-theme-border text-xs font-medium text-theme-text hover:bg-theme-surface-secondary transition-colors"
@@ -169,8 +199,9 @@ const Dashboard = () => {
 
       {/* Main Content Area */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        
-        {projects.length === 0 ? (
+        {viewMode === 'canvas' ? (
+          <GraveyardCanvas />
+        ) : projects.length === 0 ? (
           // Restrained Empty State per spec
           <div className="max-w-md mx-auto my-14 p-8 bg-theme-surface border border-theme-border rounded-xl text-center shadow-sm space-y-3">
             <h2 className="text-xl font-serif-title font-semibold text-theme-text">

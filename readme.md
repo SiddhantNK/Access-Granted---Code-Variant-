@@ -13,6 +13,13 @@
 
 </div>
 
+## Visit the App
+
+<div align="center">
+
+**[Open The Project Graveyard](https://access-granted-code-variant.vercel.app/)**
+
+</div>
 
 
 ## Overview
@@ -174,7 +181,13 @@ The goal is not to replace project-management tools. The goal is to give unfinis
 
 <img src="/Assests/creating_newburial.png" alt="Creating New Burial" width="800"/>
   
-  
+   <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+<h3>Light Mode </h3>
+<img src="/Assests/light_mode.png" alt="Light Mode " width="800"/>
 
 
 </div>
@@ -222,12 +235,10 @@ Make sure you have the following installed:
 
 ### Clone the Repository
 
-
 ```bash
-git clone [https://github.comSiddhantNK/Access-Granted---Code-Variant-.git](https://github.com/SiddhantNK/Access-Granted---Code-Variant-.git)
-cd project-graveyard
+git clone [https://github.com/SiddhantNK/Access-Granted---Code-Variant-.git](https://github.com/SiddhantNK/Access-Granted---Code-Variant-.git)
+cd Access-Granted---Code-Variant-
 ```
-
 
 ### Install Dependencies
 

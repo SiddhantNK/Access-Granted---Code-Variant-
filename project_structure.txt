@@ -1,0 +1,33 @@
+project structure for: d:\HACKTHON\Code_vaiant\Access-Granted---Code-Variant-
+==================================================
+
+├── Assests/
+│   ├── Prjct_logo.png
+│   └── technical_approach.png
+├── src/
+│   ├── components/
+│   │   ├── GhostMascot.jsx
+│   │   ├── IntroWalkthrough.jsx
+│   │   └── Navbar.jsx
+│   ├── context/
+│   │   ├── AuthContext.jsx
+│   │   ├── IntroContext.jsx
+│   │   ├── ProjectContext.jsx
+│   │   └── ThemeContext.jsx
+│   ├── pages/
+│   │   ├── Crypt.jsx
+│   │   ├── Dashboard.jsx
+│   │   └── LandingPage.jsx
+│   ├── AppUpdated.jsx
+│   ├── index.css
+│   ├── main.jsx
+│   └── tailwind.config.js
+├── .env.example
+├── .eslintrc.cjs
+├── .gitignore
+├── index.html
+├── LICENSE
+├── package.json
+├── postcss.config.js
+├── readme.md
+└── vite.config.js

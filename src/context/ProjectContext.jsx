@@ -36,13 +36,120 @@ export const ProjectProvider = ({ children }) => {
     }
   }, [user]);
 
+  // Default seed projects with realistic file directory trees
+  const getInitialSeedProjects = (userId) => [
+    {
+      id: `proj_seed_1`,
+      name: 'OmniChain DEX Aggregator',
+      epitaph: 'Paused after Hackathon submission due to RPC rate limits and liquidity complexity.',
+      category: 'Web3 / DeFi',
+      originalIdea: 'A unified decentralized exchange routing orders across Arbitrum, Base, and Solana with gasless transfers.',
+      completed: ['Core routing smart contract', 'MetaMask + Phantom wallet connector', 'Token swap UI in Tailwind'],
+      unfinished: ['Cross-chain bridge relayers', 'Slippage protector bots', 'Sub-graph indexing server'],
+      pauseReason: 'Hackathon ended, team dispersed and RPC node infrastructure became too costly.',
+      status: 'Resting',
+      revivalPath: 'Reborn',
+      salvageTags: ['Smart Contracts', 'Web3 Connectors', 'Tailwind UI', 'Router Hook'],
+      links: { github: 'https://github.com/example/omnichain-dex', demo: 'https://omnichain-dex.dev', notes: 'Consider pivoting into Solana-only aggregator.' },
+      nextSmallestStep: 'Refactor swap routing algorithm into a standalone lightweight NPM library.',
+      revisitAt: new Date(Date.now() + 86400000 * 7).toISOString(),
+      timeline: [
+        { id: 't1', type: 'created', note: 'Project created during ETHGlobal', createdAt: new Date(Date.now() - 86400000 * 45).toISOString() },
+        { id: 't2', type: 'progress', note: 'Finished Uniswap V3 quoter integration', createdAt: new Date(Date.now() - 86400000 * 30).toISOString() },
+        { id: 't3', type: 'status', note: 'Project laid to rest in Crypt', createdAt: new Date(Date.now() - 86400000 * 12).toISOString() },
+      ],
+      fileTree: [
+        { name: 'contracts/', type: 'dir', children: [{ name: 'AggregatorRouter.sol', type: 'file', size: '4.2 KB' }, { name: 'GaslessRelay.sol', type: 'file', size: '2.8 KB' }] },
+        { name: 'src/', type: 'dir', children: [
+          { name: 'components/', type: 'dir', children: [{ name: 'SwapCard.tsx', type: 'file', size: '8.1 KB' }, { name: 'TokenSelector.tsx', type: 'file', size: '5.3 KB' }] },
+          { name: 'hooks/', type: 'dir', children: [{ name: 'useQuote.ts', type: 'file', size: '3.1 KB' }] },
+          { name: 'App.tsx', type: 'file', size: '2.4 KB' }
+        ]},
+        { name: 'README.md', type: 'file', size: '1.2 KB' },
+        { name: 'package.json', type: 'file', size: '840 B' },
+      ],
+      createdAt: new Date(Date.now() - 86400000 * 45).toISOString(),
+      updatedAt: new Date(Date.now() - 86400000 * 12).toISOString(),
+    },
+    {
+      id: `proj_seed_2`,
+      name: 'NeuroNotes Canvas',
+      epitaph: 'Brain-dump markdown editor with bi-directional knowledge graphs.',
+      category: 'Developer Tools',
+      originalIdea: 'Infinite canvas markdown editor that connects thoughts like synaptic nodes.',
+      completed: ['Markdown WYSIWYG parser', 'Force-directed graph renderer with D3.js', 'Local SQLite storage'],
+      unfinished: ['End-to-end encrypted cloud sync', 'AI auto-linking tags', 'Mobile responsive view'],
+      pauseReason: 'Scope creep took over; tried to build a personal Obsidian competitor in 3 weeks.',
+      status: 'Fresh Grave',
+      revivalPath: 'Salvage',
+      salvageTags: ['D3 Graph Engine', 'Markdown Parser', 'Canvas Zoom Hook'],
+      links: { github: 'https://github.com/example/neuro-notes', demo: '', notes: 'D3 graph component is ready to plug into other apps.' },
+      nextSmallestStep: 'Extract the D3 force-graph component and publish it as an open-source React component.',
+      revisitAt: new Date(Date.now() - 86400000 * 2).toISOString(), // Time capsule due!
+      timeline: [
+        { id: 't4', type: 'created', note: 'Idea sparked after frustration with note apps', createdAt: new Date(Date.now() - 86400000 * 60).toISOString() },
+        { id: 't5', type: 'progress', note: 'Completed force directed graph rendering', createdAt: new Date(Date.now() - 86400000 * 25).toISOString() },
+      ],
+      fileTree: [
+        { name: 'src/', type: 'dir', children: [
+          { name: 'canvas/', type: 'dir', children: [{ name: 'ForceGraph.tsx', type: 'file', size: '12.4 KB' }, { name: 'NodeRenderer.tsx', type: 'file', size: '4.6 KB' }] },
+          { name: 'editor/', type: 'dir', children: [{ name: 'MarkdownEditor.tsx', type: 'file', size: '6.7 KB' }] },
+          { name: 'store/', type: 'dir', children: [{ name: 'notesStore.ts', type: 'file', size: '3.9 KB' }] }
+        ]},
+        { name: 'public/', type: 'dir', children: [{ name: 'favicon.ico', type: 'file', size: '1.4 KB' }] },
+        { name: 'vite.config.ts', type: 'file', size: '450 B' }
+      ],
+      createdAt: new Date(Date.now() - 86400000 * 60).toISOString(),
+      updatedAt: new Date(Date.now() - 86400000 * 5).toISOString(),
+    },
+    {
+      id: `proj_seed_3`,
+      name: 'GhostWriter PR Reviewer',
+      epitaph: 'Automated GitHub Action bot that leaves context-aware comments on pull requests.',
+      category: 'AI / Automation',
+      originalIdea: 'CLI and GitHub action that summarizes PR diffs and detects security regressions.',
+      completed: ['GitHub Webhook receiver', 'Diff tokenizer & chunker', 'OpenAI prompt chain'],
+      unfinished: ['OAuth permission management', 'Stripe billing integration', 'Support for mono-repos'],
+      pauseReason: 'Burnout from job and exams; left waiting for OAuth app verification.',
+      status: 'Revived',
+      revivalPath: 'Revive',
+      salvageTags: ['GitHub API Client', 'Git Diff Parser', 'OpenAI Prompts'],
+      links: { github: 'https://github.com/example/ghostwriter-bot', demo: '', notes: 'Clean architecture, easy to finish.' },
+      nextSmallestStep: 'Update OpenAI API keys and run local integration test against sample PR.',
+      revisitAt: new Date(Date.now() + 86400000 * 14).toISOString(),
+      timeline: [
+        { id: 't6', type: 'created', note: 'Project created', createdAt: new Date(Date.now() - 86400000 * 90).toISOString() },
+        { id: 't7', type: 'progress', note: 'Wrote AST diff parser', createdAt: new Date(Date.now() - 86400000 * 60).toISOString() },
+        { id: 't8', type: 'progress', note: 'Revived and tested local webhook server', createdAt: new Date().toISOString() },
+      ],
+      fileTree: [
+        { name: 'action/', type: 'dir', children: [{ name: 'index.js', type: 'file', size: '7.8 KB' }, { name: 'action.yml', type: 'file', size: '520 B' }] },
+        { name: 'lib/', type: 'dir', children: [
+          { name: 'analyzer.ts', type: 'file', size: '5.1 KB' },
+          { name: 'github.ts', type: 'file', size: '4.3 KB' },
+          { name: 'prompts.ts', type: 'file', size: '2.9 KB' }
+        ]},
+        { name: 'tests/', type: 'dir', children: [{ name: 'analyzer.test.ts', type: 'file', size: '3.4 KB' }] }
+      ],
+      createdAt: new Date(Date.now() - 86400000 * 90).toISOString(),
+      updatedAt: new Date().toISOString(),
+    }
+  ];
+
   // Load projects for current user from localStorage
   const loadProjects = () => {
     if (!user) return;
     try {
       const key = `pg_projects_${user.id}`;
       const data = localStorage.getItem(key);
-      setProjects(data ? JSON.parse(data) : []);
+      if (data) {
+        const parsed = JSON.parse(data);
+        setProjects(parsed.length > 0 ? parsed : getInitialSeedProjects(user.id));
+      } else {
+        const initial = getInitialSeedProjects(user.id);
+        localStorage.setItem(key, JSON.stringify(initial));
+        setProjects(initial);
+      }
     } catch (err) {
       console.error('Failed to load projects:', err);
       setProjects([]);

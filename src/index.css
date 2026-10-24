@@ -2,9 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Smooth scrolling */
+/* Smooth scrolling and base typography */
 html {
   scroll-behavior: smooth;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Light / Mist Theme adjustments */
+html:not(.dark) {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+html:not(.dark) .bg-slate-950,
+html:not(.dark) .bg-slate-900 {
+  background-color: #f1f5f9 !important;
+}
+
+html:not(.dark) .bg-slate-900\/60,
+html:not(.dark) .bg-slate-900\/70,
+html:not(.dark) .bg-slate-800\/50 {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  color: #1e293b;
+}
+
+html:not(.dark) .text-white {
+  color: #0f172a !important;
+}
+
+html:not(.dark) .text-white\/60,
+html:not(.dark) .text-white\/50,
+html:not(.dark) .text-white\/70 {
+  color: #475569 !important;
 }
 
 /* Custom scrollbar */

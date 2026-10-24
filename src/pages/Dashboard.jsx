@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, Search, Filter, TrendingUp } from 'lucide-react';
+import { Plus, Search, Filter, TrendingUp, Clock, Moon, Sparkles, Sprout, Archive, FileText, Code2, Flame } from 'lucide-react';
 import GhostMascot from '../components/GhostMascot';
 import { useProjects } from '../context/ProjectContext';
 
@@ -71,22 +71,22 @@ const Dashboard = () => {
         <div className="absolute bottom-10 left-10 w-[28rem] h-[28rem] bg-indigo-600/10 rounded-full blur-[140px]" />
       </div>
 
-      {/* Atmospheric floating aesthetic symbols directly on the screen */}
+      {/* Atmospheric floating aesthetic icons directly on the screen */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none">
-        <div className="absolute top-28 left-[5%] text-2xl opacity-20 animate-ambientDrift" style={{ animationDelay: '0s' }}>
-          <span title="Unfinished Code">📜</span>
+        <div className="absolute top-28 left-[5%] text-purple-400/20 animate-ambientDrift" style={{ animationDelay: '0s' }}>
+          <FileText className="w-6 h-6" />
         </div>
-        <div className="absolute top-48 right-[7%] text-xl opacity-20 animate-ambientDrift" style={{ animationDelay: '2s' }}>
-          <span title="Grave Tombstone">⚰️</span>
+        <div className="absolute top-48 right-[7%] text-purple-400/20 animate-ambientDrift" style={{ animationDelay: '2s' }}>
+          <Archive className="w-5 h-5" />
         </div>
-        <div className="absolute bottom-40 left-[8%] text-xl opacity-20 animate-ambientDrift" style={{ animationDelay: '3.5s' }}>
-          <span title="Idea Sparks">✨</span>
+        <div className="absolute bottom-40 left-[8%] text-purple-400/20 animate-ambientDrift" style={{ animationDelay: '3.5s' }}>
+          <Sparkles className="w-5 h-5" />
         </div>
-        <div className="absolute top-1/2 right-[4%] text-2xl opacity-15 animate-ambientDrift" style={{ animationDelay: '1.2s' }}>
-          <span title="Time Capsule">⏳</span>
+        <div className="absolute top-1/2 right-[4%] text-purple-400/15 animate-ambientDrift" style={{ animationDelay: '1.2s' }}>
+          <Clock className="w-6 h-6" />
         </div>
-        <div className="absolute bottom-20 right-[15%] text-xl opacity-20 animate-ambientDrift" style={{ animationDelay: '4.8s' }}>
-          <span title="Memory Candle">🕯️</span>
+        <div className="absolute bottom-20 right-[15%] text-purple-400/20 animate-ambientDrift" style={{ animationDelay: '4.8s' }}>
+          <Flame className="w-5 h-5" />
         </div>
       </div>
 
@@ -96,7 +96,7 @@ const Dashboard = () => {
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="animate-slideUp">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-xl">🪦</span>
+                <Archive className="w-6 h-6 text-purple-400" />
                 <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-white via-purple-100 to-purple-400 bg-clip-text text-transparent">
                   Your Graveyard
                 </h1>
@@ -134,7 +134,6 @@ const Dashboard = () => {
                 animated={true}
                 className="mx-auto drop-shadow-[0_10px_20px_rgba(168,85,247,0.3)]"
               />
-              <span className="absolute -bottom-1 -right-2 text-2xl animate-bounce">🌱</span>
             </div>
 
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
@@ -167,7 +166,7 @@ const Dashboard = () => {
               <section className="animate-slideUp">
                 <div className="flex items-center gap-2.5 mb-5">
                   <div className="p-1.5 bg-amber-500/20 text-amber-300 rounded-lg border border-amber-500/30">
-                    <span className="text-lg">🕰️</span>
+                    <Clock className="w-5 h-5" />
                   </div>
                   <div>
                     <h2 className="text-xl font-bold text-white">
@@ -191,7 +190,7 @@ const Dashboard = () => {
               <section className="animate-slideUp" style={{ animationDelay: '100ms' }}>
                 <div className="flex items-center gap-2.5 mb-5">
                   <div className="p-1.5 bg-purple-500/20 text-purple-300 rounded-lg border border-purple-500/30">
-                    <span className="text-lg">😴</span>
+                    <Moon className="w-5 h-5" />
                   </div>
                   <div>
                     <h2 className="text-xl font-bold text-white">
@@ -215,7 +214,7 @@ const Dashboard = () => {
               <section className="animate-slideUp" style={{ animationDelay: '200ms' }}>
                 <div className="flex items-center gap-2.5 mb-5">
                   <div className="p-1.5 bg-emerald-500/20 text-emerald-300 rounded-lg border border-emerald-500/30">
-                    <span className="text-lg">✨</span>
+                    <Sparkles className="w-5 h-5" />
                   </div>
                   <div>
                     <h2 className="text-xl font-bold text-white">

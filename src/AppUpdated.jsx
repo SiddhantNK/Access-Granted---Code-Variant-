@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Ghost } from 'lucide-react';
 
 // Providers
 import ThemeProvider from './context/ThemeContext';
@@ -31,8 +32,8 @@ const ProtectedRoute = ({ element }) => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin">👻</div>
-          <p className="text-white/60 mt-4">Loading...</p>
+          <Ghost className="w-8 h-8 text-purple-400 animate-spin mx-auto" />
+          <p className="text-white/60 mt-4 text-xs font-medium">Entering Crypt...</p>
         </div>
       </div>
     );
@@ -63,6 +64,7 @@ const AppContent = () => {
           <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
           <Route path="/crypt" element={<ProtectedRoute element={<Crypt />} />} />
           <Route path="/grave/:projectId" element={<ProtectedRoute element={<GraveView />} />} />
+          <Route path="/revive" element={<ProtectedRoute element={<RevivePage />} />} />
           <Route path="/revive/:projectId" element={<ProtectedRoute element={<RevivePage />} />} />
           <Route path="/autopsy" element={<ProtectedRoute element={<Autopsy />} />} />
 

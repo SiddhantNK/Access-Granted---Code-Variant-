@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { BarChart2, Tag, AlertTriangle, Trophy, PieChart } from 'lucide-react';
 import GhostMascot from '../components/GhostMascot';
 import { useProjects } from '../context/ProjectContext';
 
@@ -29,7 +30,8 @@ const Autopsy = () => {
           {/* Key Metrics */}
           <section className="animate-slideUp">
             <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-              <span>📊</span> Overview
+              <BarChart2 className="w-5 h-5 text-purple-400" />
+              <span>Overview</span>
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="bg-slate-800/50 border border-purple-500/20 rounded-lg p-6 animate-scaleIn">
@@ -57,7 +59,8 @@ const Autopsy = () => {
           {/* Status Breakdown */}
           <section className="animate-slideUp" style={{ animationDelay: '200ms' }}>
             <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-              <span>🏷️</span> Projects by Status
+              <PieChart className="w-5 h-5 text-purple-400" />
+              <span>Projects by Status</span>
             </h2>
             <div className="space-y-3">
               {Object.entries(analytics.byStatus).map(([status, count], idx) => (
@@ -83,7 +86,8 @@ const Autopsy = () => {
           {Object.keys(analytics.salvageTags).length > 0 && (
             <section className="animate-slideUp" style={{ animationDelay: '300ms' }}>
               <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                <span>🏷️</span> Most Common Salvage Tags
+                <Tag className="w-5 h-5 text-purple-400" />
+                <span>Most Common Salvage Tags</span>
               </h2>
               <div className="flex flex-wrap gap-3">
                 {Object.entries(analytics.salvageTags)
@@ -106,7 +110,8 @@ const Autopsy = () => {
           {Object.keys(analytics.abandonmentReasons).length > 0 && (
             <section className="animate-slideUp" style={{ animationDelay: '400ms' }}>
               <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                <span>😢</span> Most Common Pause Reasons
+                <AlertTriangle className="w-5 h-5 text-amber-400" />
+                <span>Most Common Pause Reasons</span>
               </h2>
               <div className="space-y-3">
                 {Object.entries(analytics.abandonmentReasons)
@@ -135,7 +140,8 @@ const Autopsy = () => {
           {analytics.highestPotential.length > 0 && (
             <section className="animate-slideUp" style={{ animationDelay: '500ms' }}>
               <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                <span>🏆</span> Revival Candidates
+                <Trophy className="w-5 h-5 text-amber-400" />
+                <span>Revival Candidates</span>
               </h2>
               <div className="space-y-4">
                 {analytics.highestPotential.map((project, idx) => (

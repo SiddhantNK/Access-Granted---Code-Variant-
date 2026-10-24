@@ -1,6 +1,24 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Edit2, Trash2, Download, ExternalLink, ChevronDown } from 'lucide-react';
+import { 
+  ArrowLeft, 
+  Edit2, 
+  Trash2, 
+  Download, 
+  ExternalLink, 
+  ChevronDown, 
+  Folder, 
+  FolderOpen, 
+  FileCode,
+  FileText,
+  CheckCircle2,
+  Clock,
+  Pause,
+  Tag,
+  Calendar,
+  History,
+  Sparkles
+} from 'lucide-react';
 import GhostMascot from '../components/GhostMascot';
 import { useProjects } from '../context/ProjectContext';
 
@@ -42,11 +60,11 @@ const GraveView = () => {
   };
 
   const revivalPaths = [
-    { name: 'Revive', icon: '🔄', description: 'Continue from where it stopped' },
-    { name: 'Reborn', icon: '🌱', description: 'Restart with clearer scope' },
-    { name: 'Pivot', icon: '↪️', description: 'Change direction but keep value' },
-    { name: 'Salvage', icon: '🧩', description: 'Reuse parts elsewhere' },
-    { name: 'Lay to Rest', icon: '⚡', description: 'Archive peacefully' },
+    { name: 'Revive', description: 'Continue from where it stopped' },
+    { name: 'Reborn', description: 'Restart with clearer scope' },
+    { name: 'Pivot', description: 'Change direction but keep value' },
+    { name: 'Salvage', description: 'Reuse parts elsewhere' },
+    { name: 'Lay to Rest', description: 'Archive peacefully' },
   ];
 
   return (
@@ -139,7 +157,8 @@ const GraveView = () => {
               {/* Original Idea */}
               <section className="animate-slideUp" style={{ animationDelay: '100ms' }}>
                 <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                  <span>📋</span> Original Idea
+                  <FileText className="w-5 h-5 text-purple-400" />
+                  <span>Original Idea</span>
                 </h2>
                 <div className="bg-slate-800/50 border border-purple-500/20 rounded-lg p-6">
                   <p className="text-white/80 leading-relaxed">{project.originalIdea}</p>
@@ -149,7 +168,8 @@ const GraveView = () => {
               {/* Completed Work */}
               <section className="animate-slideUp" style={{ animationDelay: '200ms' }}>
                 <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                  <span>✅</span> Completed Work ({project.completed.length})
+                  <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                  <span>Completed Work ({project.completed.length})</span>
                 </h2>
                 <div className="bg-slate-800/50 border border-purple-500/20 rounded-lg p-6 space-y-3">
                   {project.completed.length > 0 ? (
@@ -170,7 +190,8 @@ const GraveView = () => {
               {/* Unfinished Work */}
               <section className="animate-slideUp" style={{ animationDelay: '300ms' }}>
                 <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                  <span>⏳</span> Unfinished Work ({project.unfinished.length})
+                  <Clock className="w-5 h-5 text-amber-400" />
+                  <span>Unfinished Work ({project.unfinished.length})</span>
                 </h2>
                 <div className="bg-slate-800/50 border border-purple-500/20 rounded-lg p-6 space-y-3">
                   {project.unfinished.length > 0 ? (
@@ -191,10 +212,117 @@ const GraveView = () => {
               {/* Why It Paused */}
               <section className="animate-slideUp" style={{ animationDelay: '400ms' }}>
                 <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                  <span>⏸️</span> Why It Paused
+                  <Pause className="w-5 h-5 text-purple-400" />
+                  <span>Why It Paused</span>
                 </h2>
                 <div className="bg-slate-800/50 border border-purple-500/20 rounded-lg p-6">
                   <p className="text-white/80">{project.pauseReason}</p>
+                </div>
+              </section>
+
+              {/* Codebase Directory Structure (Repository Level File Tree) */}
+              <section className="animate-slideUp" style={{ animationDelay: '450ms' }}>
+                <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                  <Folder className="w-6 h-6 text-purple-400" />
+                  <span>Archived Repository File Tree</span>
+                </h2>
+                <div className="bg-slate-900/80 border border-purple-500/20 rounded-xl p-5 font-mono text-xs">
+                  <div className="flex items-center gap-2 pb-3 mb-3 border-b border-purple-500/20 text-purple-300 font-semibold">
+                    <FolderOpen className="w-4 h-4 text-purple-400" />
+                    <span>{project.name.toLowerCase().replace(/\s+/g, '-')}/</span>
+                  </div>
+                  
+                  {project.fileTree && project.fileTree.length > 0 ? (
+                    <div className="space-y-1.5 pl-2 text-white/70">
+                      {project.fileTree.map((item, idx) => (
+                        <div key={idx}>
+                          {item.type === 'dir' ? (
+                            <div>
+                              <div className="flex items-center gap-2 text-purple-200 font-medium py-0.5">
+                                <Folder className="w-3.5 h-3.5 text-purple-400" />
+                                <span>{item.name}</span>
+                              </div>
+                              {item.children && (
+                                <div className="pl-5 space-y-1 py-0.5 border-l border-purple-500/20 ml-1.5">
+                                  {item.children.map((child, cIdx) => (
+                                    <div key={cIdx}>
+                                      {child.type === 'dir' ? (
+                                        <div>
+                                          <div className="flex items-center gap-2 text-purple-300/80">
+                                            <Folder className="w-3 h-3 text-purple-400" />
+                                            <span>{child.name}</span>
+                                          </div>
+                                          {child.children && (
+                                            <div className="pl-4 space-y-1 border-l border-purple-500/20 ml-1">
+                                              {child.children.map((sub, sIdx) => (
+                                                <div key={sIdx} className="flex items-center justify-between text-white/60 py-0.5 hover:text-white transition-colors">
+                                                  <span className="flex items-center gap-2">
+                                                    <FileCode className="w-3 h-3 text-indigo-400" />
+                                                    <span>{sub.name}</span>
+                                                  </span>
+                                                  <span className="text-[10px] text-white/30">{sub.size}</span>
+                                                </div>
+                                              ))}
+                                            </div>
+                                          )}
+                                        </div>
+                                      ) : (
+                                        <div className="flex items-center justify-between text-white/60 py-0.5 hover:text-white transition-colors">
+                                          <span className="flex items-center gap-2">
+                                            <FileCode className="w-3 h-3 text-indigo-400" />
+                                            <span>{child.name}</span>
+                                          </span>
+                                          <span className="text-[10px] text-white/30">{child.size}</span>
+                                        </div>
+                                      )}
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          ) : (
+                            <div className="flex items-center justify-between text-white/60 py-0.5 hover:text-white transition-colors">
+                              <span className="flex items-center gap-2">
+                                <FileCode className="w-3.5 h-3.5 text-indigo-400" />
+                                <span>{item.name}</span>
+                              </span>
+                              <span className="text-[10px] text-white/30">{item.size}</span>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="space-y-1.5 pl-2 text-white/60">
+                      <div className="flex items-center gap-2 text-purple-200">
+                        <Folder className="w-3.5 h-3.5 text-purple-400" />
+                        <span>src/</span>
+                      </div>
+                      <div className="pl-5 space-y-1 border-l border-purple-500/20 ml-1.5">
+                        <div className="flex items-center justify-between text-white/50">
+                          <span className="flex items-center gap-2">
+                            <FileCode className="w-3 h-3 text-indigo-400" />
+                            <span>index.ts</span>
+                          </span>
+                          <span className="text-[10px]">1.2 KB</span>
+                        </div>
+                        <div className="flex items-center justify-between text-white/50">
+                          <span className="flex items-center gap-2">
+                            <FileCode className="w-3 h-3 text-indigo-400" />
+                            <span>App.tsx</span>
+                          </span>
+                          <span className="text-[10px]">3.4 KB</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between text-white/50 pt-1">
+                        <span className="flex items-center gap-2">
+                          <FileCode className="w-3.5 h-3.5 text-indigo-400" />
+                          <span>README.md</span>
+                        </span>
+                        <span className="text-[10px]">850 B</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </section>
             </div>
@@ -219,7 +347,8 @@ const GraveView = () => {
               {project.salvageTags.length > 0 && (
                 <section className="animate-slideUp" style={{ animationDelay: '600ms' }}>
                   <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                    <span>🏷️</span> Salvage Tags
+                    <Tag className="w-5 h-5 text-purple-400" />
+                    <span>Salvage Tags</span>
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {project.salvageTags.map((tag) => (
@@ -290,7 +419,8 @@ const GraveView = () => {
               onClick={() => setExpandTimeline(!expandTimeline)}
               className="flex items-center gap-2 text-xl font-bold text-white mb-6 hover:text-purple-300 transition-colors w-full"
             >
-              <span>🕐</span> Timeline ({project.timeline.length})
+              <History className="w-5 h-5 text-purple-400" />
+              <span>Timeline ({project.timeline.length})</span>
               <ChevronDown
                 className={`w-5 h-5 ml-auto transition-transform ${expandTimeline ? 'rotate-180' : ''}`}
               />

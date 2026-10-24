@@ -1,74 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import GhostMascot from './GhostMascot';
 import { ChevronRight, ChevronLeft, X } from 'lucide-react';
 
 /**
  * IntroWalkthrough Component
  * 
- * A beautiful, skippable walkthrough tour for new users.
- * Ghost mascot appears and guides users through key features.
- * 
- * Props:
- * - isOpen: boolean - whether to show the walkthrough
- * - onClose: callback - called when user skips or completes
+ * Calm, accessible, archival walkthrough guide.
+ * Follows semantic design tokens in both light and dark themes.
  */
 export const IntroWalkthrough = ({ isOpen = true, onClose = () => {} }) => {
   const [step, setStep] = useState(0);
 
+  // Always reset to step 0 whenever the tutorial opens
+  useEffect(() => {
+    if (isOpen) {
+      setStep(0);
+    }
+  }, [isOpen]);
+
   const steps = [
     {
-      title: "Welcome to The Project Graveyard",
-      description: "A peaceful place where unfinished projects get a second life. Let's take a quick tour!",
-      position: 'center',
-      ghostExpression: 'happy',
-      ghostSize: 'xl',
-      highlight: null,
-      action: null,
-    },
-    {
-      title: "Create a New Burial",
-      description: "Click 'New Burial' to document your unfinished projects. Don't worry—you can revisit them anytime.",
-      position: 'center',
-      ghostExpression: 'thinking',
-      ghostSize: 'lg',
-      highlight: '[data-tour="new-burial"]',
-      action: 'Click here to start',
-    },
-    {
-      title: "Search Your Graveyard",
-      description: "Find old projects quickly with search and filters. Group by status, tags, or revival path.",
-      position: 'center',
+      title: "Welcome to The Graveyard",
+      description: "A peaceful archive for unfinished projects. Preserve context, record why work ceased, and decide when to revive or salvage components.",
       ghostExpression: 'happy',
       ghostSize: 'lg',
-      highlight: '[data-tour="search"]',
-      action: 'Try searching',
     },
     {
-      title: "Revival Paths",
-      description: "When you revisit a project, decide its fate: Revive, Reborn, Pivot, Salvage, or Lay to Rest.",
-      position: 'center',
-      ghostExpression: 'neutral',
-      ghostSize: 'lg',
-      highlight: null,
-      action: 'Learn more',
-    },
-    {
-      title: "Project Health Score",
-      description: "See how likely a project is worth reviving. Based on completed work, clarity, and recency.",
-      position: 'center',
+      title: "Lay a Project to Rest",
+      description: "Document what you finished, what remains, and the honest reason it paused. Keep code links and salvageable modules organized.",
       ghostExpression: 'thinking',
       ghostSize: 'md',
-      highlight: null,
-      action: 'Check the Autopsy',
     },
     {
-      title: "You're All Set!",
-      description: "Your graveyard awaits. Remember: unfinished doesn't mean forgotten. Now go document your ideas.",
-      position: 'center',
+      title: "The Crypt & Time Capsules",
+      description: "Filter projects by tags or status. Set revisit dates so dormant ideas awaken when you have time and fresh perspective.",
+      ghostExpression: 'neutral',
+      ghostSize: 'md',
+    },
+    {
+      title: "Five Revival Paths",
+      description: "When returning to a project, choose a deliberate route: Revive, Reborn, Pivot, Salvage, or Lay to Rest peacefully.",
+      ghostExpression: 'thinking',
+      ghostSize: 'md',
+    },
+    {
+      title: "Autopsy & Health Analytics",
+      description: "Discover recurring abandonment patterns across your projects and identify high-potential candidates for your next build.",
       ghostExpression: 'happy',
-      ghostSize: 'xl',
-      highlight: null,
-      action: 'Start exploring',
+      ghostSize: 'lg',
     },
   ];
 
@@ -100,103 +79,92 @@ export const IntroWalkthrough = ({ isOpen = true, onClose = () => {} }) => {
   return (
     <>
       {/* Backdrop */}
-      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300" />
+      <div 
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity"
+        onClick={handleClose}
+      />
 
       {/* Main Modal */}
       <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
-        <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl shadow-2xl max-w-2xl w-full border border-purple-500/20 overflow-hidden">
+        <div className="bg-theme-surface border border-theme-border rounded-2xl shadow-lg max-w-xl w-full p-6 sm:p-8 animate-slideUp text-theme-text relative">
           
           {/* Close Button */}
           <button
             onClick={handleClose}
-            className="absolute top-4 right-4 p-2 hover:bg-white/10 rounded-full transition-colors z-10"
+            className="absolute top-4 right-4 p-1.5 text-theme-text-muted hover:text-theme-text hover:bg-theme-surface-secondary rounded-lg transition-colors"
             aria-label="Close walkthrough"
           >
-            <X className="w-6 h-6 text-white" />
+            <X className="w-5 h-5" />
           </button>
 
-          {/* Content Container */}
-          <div className="flex flex-col lg:flex-row items-center gap-8 p-8 lg:p-12">
+          <div className="flex flex-col sm:flex-row items-center gap-6">
             
-            {/* Ghost & Visual Section */}
-            <div className="flex-1 flex flex-col items-center justify-center">
-              <div className="relative w-full h-64 flex items-center justify-center">
-                {/* Subtle background glow */}
-                <div className="absolute inset-0 bg-gradient-radial from-purple-500/20 to-transparent rounded-full blur-3xl" />
-                
-                {/* Ghost Mascot */}
-                <GhostMascot
-                  size={currentStep.ghostSize}
-                  expression={currentStep.ghostExpression}
-                  animated={true}
-                  className="relative z-10"
-                />
-              </div>
-
-              {/* Step Indicator - Dots */}
-              <div className="flex gap-2 mt-8">
-                {steps.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setStep(i)}
-                    className={`transition-all duration-300 rounded-full ${
-                      i === step
-                        ? 'w-8 h-2 bg-purple-500'
-                        : 'w-2 h-2 bg-white/30 hover:bg-white/50'
-                    }`}
-                    aria-label={`Go to step ${i + 1}`}
-                  />
-                ))}
-              </div>
+            {/* Mascot Side */}
+            <div className="flex-shrink-0 flex flex-col items-center justify-center p-4 bg-theme-surface-secondary rounded-xl border border-theme-border w-32 h-32 sm:w-36 sm:h-36">
+              <GhostMascot
+                size={currentStep.ghostSize}
+                expression={currentStep.ghostExpression}
+                animated={true}
+              />
             </div>
 
-            {/* Text & Action Section */}
-            <div className="flex-1 flex flex-col justify-between">
-              {/* Progress */}
-              <div className="text-sm text-white/60 mb-4">
+            {/* Content Side */}
+            <div className="flex-1 text-center sm:text-left">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-theme-text-muted">
                 Step {step + 1} of {steps.length}
-              </div>
+              </span>
+              <h2 className="text-xl font-serif-title font-bold text-theme-text mt-1 mb-2">
+                {currentStep.title}
+              </h2>
+              <p className="text-xs sm:text-sm text-theme-text-muted leading-relaxed">
+                {currentStep.description}
+              </p>
+            </div>
+          </div>
 
-              {/* Title & Description */}
-              <div>
-                <h2 className="text-3xl font-bold text-white mb-4 leading-tight">
-                  {currentStep.title}
-                </h2>
-                <p className="text-lg text-white/80 mb-8 leading-relaxed">
-                  {currentStep.description}
-                </p>
-              </div>
-
-              {/* Navigation Buttons */}
-              <div className="flex gap-4 mt-8">
+          {/* Bottom Bar: Indicators & Controls */}
+          <div className="mt-8 pt-5 border-t border-theme-border flex items-center justify-between">
+            {/* Dots */}
+            <div className="flex gap-1.5">
+              {steps.map((_, i) => (
                 <button
-                  onClick={handlePrev}
-                  disabled={isFirstStep}
-                  className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-all duration-200 font-medium ${
-                    isFirstStep
-                      ? 'text-white/40 cursor-not-allowed'
-                      : 'text-white hover:bg-white/10 active:bg-white/20'
+                  key={i}
+                  onClick={() => setStep(i)}
+                  className={`h-1.5 rounded-full transition-all ${
+                    i === step
+                      ? 'w-6 bg-theme-accent'
+                      : 'w-1.5 bg-theme-border hover:bg-theme-text-subtle'
                   }`}
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                  Back
-                </button>
+                  aria-label={`Step ${i + 1}`}
+                />
+              ))}
+            </div>
 
-                <button
-                  onClick={handleNext}
-                  className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400 text-white rounded-lg transition-all duration-200 font-semibold active:scale-95"
-                >
-                  {isLastStep ? 'Start Exploring' : 'Next'}
-                  {!isLastStep && <ChevronRight className="w-5 h-5" />}
-                </button>
-              </div>
-
-              {/* Skip Link */}
+            {/* Actions */}
+            <div className="flex items-center gap-2">
               <button
                 onClick={handleClose}
-                className="text-white/50 hover:text-white/80 text-sm mt-6 transition-colors"
+                className="text-xs text-theme-text-muted hover:text-theme-text px-2 py-1.5 transition-colors"
               >
-                Skip this tour
+                Skip
+              </button>
+
+              {!isFirstStep && (
+                <button
+                  onClick={handlePrev}
+                  className="px-3 py-1.5 rounded-lg border border-theme-border text-xs text-theme-text hover:bg-theme-surface-secondary transition-colors"
+                >
+                  <ChevronLeft className="w-4 h-4 inline mr-0.5" />
+                  Back
+                </button>
+              )}
+
+              <button
+                onClick={handleNext}
+                className="px-4 py-1.5 rounded-lg bg-theme-accent hover:bg-theme-accent-hover text-theme-accent-foreground text-xs font-semibold transition-all shadow-sm flex items-center gap-1"
+              >
+                <span>{isLastStep ? 'Enter Archive' : 'Next'}</span>
+                {!isLastStep && <ChevronRight className="w-3.5 h-3.5" />}
               </button>
             </div>
           </div>

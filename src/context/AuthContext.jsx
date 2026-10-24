@@ -21,6 +21,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [loginJustSucceeded, setLoginJustSucceeded] = useState(false);
 
   // Check for existing session on mount
   useEffect(() => {
@@ -110,6 +111,7 @@ export const AuthProvider = ({ children }) => {
       // Auto login after signup
       const { password: _, ...userWithoutPassword } = newUser;
       setUser(userWithoutPassword);
+      setLoginJustSucceeded(true);
       localStorage.setItem('pg_session', JSON.stringify(userWithoutPassword));
 
       return userWithoutPassword;
@@ -132,6 +134,7 @@ export const AuthProvider = ({ children }) => {
 
       const { password: _, ...userWithoutPassword } = foundUser;
       setUser(userWithoutPassword);
+      setLoginJustSucceeded(true);
       localStorage.setItem('pg_session', JSON.stringify(userWithoutPassword));
 
       return userWithoutPassword;
@@ -144,6 +147,7 @@ export const AuthProvider = ({ children }) => {
   // Sign out
   const logout = () => {
     setUser(null);
+    setLoginJustSucceeded(false);
     localStorage.removeItem('pg_session');
     setError(null);
   };
@@ -165,6 +169,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const clearLoginSuccess = () => {
+    setLoginJustSucceeded(false);
+  };
+
   const value = {
     user,
     isLoading,
@@ -174,6 +182,8 @@ export const AuthProvider = ({ children }) => {
     logout,
     updateProfile,
     isAuthenticated: !!user,
+    loginJustSucceeded,
+    clearLoginSuccess,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -1,16 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 /**
- * GhostMascot Component - Interactive Mouse-Tracking & Auto-Expressions
+ * GhostMascot Component - Restrained Archival Guardian
  * 
- * Props:
- * - size: 'sm' | 'md' | 'lg' | 'xl' (default: 'md')
- * - expression: 'happy' | 'sad' | 'thinking' | 'scared' | 'neutral' | 'auto' (default: 'happy')
- * - animated: boolean (default: true)
- * - trackMouse: boolean (default: true)
- * - autoCycle: boolean (default: true)
- * - onClick: callback function
- * - className: additional CSS classes
+ * Calm, subtle, theme-adaptive floating mascot with mouse-tracking eyes.
+ * No neon purple drop-shadows or jarring glow effects.
  */
 export const GhostMascot = ({ 
   size = 'md', 
@@ -51,29 +45,29 @@ export const GhostMascot = ({
     };
   }, []);
 
-  // Auto blink every 4-5 seconds
+  // Subtle blink every 4-5 seconds
   useEffect(() => {
     if (!animated) return;
     
     const blinkInterval = setInterval(() => {
       setBlinking(true);
-      setTimeout(() => setBlinking(false), 160);
-    }, Math.random() * 1000 + 4000);
+      setTimeout(() => setBlinking(false), 140);
+    }, Math.random() * 1500 + 4000);
 
     return () => clearInterval(blinkInterval);
   }, [animated]);
 
-  // Periodic expression change every 4-5 seconds if autoCycle is enabled
+  // Periodic subtle expression change
   useEffect(() => {
     if (!autoCycle || expression !== 'auto') return;
 
-    const expressionsList = ['happy', 'thinking', 'neutral', 'happy', 'thinking'];
+    const expressionsList = ['happy', 'thinking', 'neutral', 'happy'];
     let index = 0;
 
     const cycleInterval = setInterval(() => {
       index = (index + 1) % expressionsList.length;
       setActiveExpression(expressionsList[index]);
-    }, 4500);
+    }, 5000);
 
     return () => clearInterval(cycleInterval);
   }, [autoCycle, expression]);
@@ -91,11 +85,10 @@ export const GhostMascot = ({
       const deltaX = e.clientX - ghostCenterX;
       const deltaY = e.clientY - ghostCenterY;
       const angle = Math.atan2(deltaY, deltaX);
-      const distance = Math.min(Math.hypot(deltaX, deltaY), 250);
+      const distance = Math.min(Math.hypot(deltaX, deltaY), 240);
       
-      // Scale offset max to 5px inside the eye
-      const maxOffset = 5.5;
-      const strength = (distance / 250) * maxOffset;
+      const maxOffset = 4.5;
+      const strength = (distance / 240) * maxOffset;
 
       setPupilOffset({
         x: Math.cos(angle) * strength,
@@ -110,36 +103,35 @@ export const GhostMascot = ({
   if (!isVisible) return null;
 
   const sizeMap = {
-    sm: 'w-16 h-16',
-    md: 'w-28 h-28',
-    lg: 'w-44 h-44',
-    xl: 'w-60 h-60',
+    sm: 'w-10 h-10',
+    md: 'w-20 h-20',
+    lg: 'w-32 h-32',
+    xl: 'w-44 h-44',
   };
 
-  // Expression-based mouth and eye styles
   const expressionConfig = {
     happy: {
-      mouthPath: 'M 86 102 Q 100 118 114 102',
+      mouthPath: 'M 88 104 Q 100 116 112 104',
       eyeScale: 1,
       eyeY: 92,
     },
     sad: {
-      mouthPath: 'M 86 110 Q 100 100 114 110',
+      mouthPath: 'M 88 112 Q 100 102 112 112',
       eyeScale: 0.9,
       eyeY: 92,
     },
     thinking: {
-      mouthPath: 'M 95 110 Q 100 105 105 110',
+      mouthPath: 'M 94 110 Q 100 106 106 110',
       eyeScale: 0.85,
-      eyeY: 88,
+      eyeY: 90,
     },
     scared: {
-      mouthPath: 'M 98 115 L 102 115',
-      eyeScale: 1.25,
+      mouthPath: 'M 97 114 L 103 114',
+      eyeScale: 1.2,
       eyeY: 90,
     },
     neutral: {
-      mouthPath: 'M 86 108 L 114 108',
+      mouthPath: 'M 88 108 L 112 108',
       eyeScale: 1,
       eyeY: 92,
     },
@@ -150,7 +142,7 @@ export const GhostMascot = ({
   return (
     <div
       ref={ghostRef}
-      className={`inline-block select-none ${animated ? 'animate-float' : ''} ${sizeMap[size]} ${className}`}
+      className={`inline-block select-none ${animated ? 'animate-floatSubtle' : ''} ${sizeMap[size]} ${className}`}
       onClick={onClick}
       role="img"
       aria-label="Ghost mascot"
@@ -159,99 +151,90 @@ export const GhostMascot = ({
         viewBox="0 0 200 220"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full drop-shadow-xl transition-transform duration-300"
+        className="w-full h-full transition-transform duration-300"
       >
         <defs>
-          <linearGradient id="ghostGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#f8fafc" />
-            <stop offset="100%" stopColor="#e2e8f0" />
+          {/* Subtle gradient adapted to the theme */}
+          <linearGradient id="ghostBodyLight" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="var(--surface)" />
+            <stop offset="100%" stopColor="var(--surface-secondary)" />
           </linearGradient>
-          
-          <filter id="ghostGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="4" result="coloredBlur" />
-            <feMerge>
-              <feMergeNode in="coloredBlur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
         </defs>
 
         {/* Ghost Body */}
         <path
-          d="M 20 100 
-             C 20 20, 180 20, 180 100 
-             L 180 180 
-             Q 160 160, 140 180 
-             T 100 180 
-             T 60 180 
-             T 20 180 
+          d="M 28 100 
+             C 28 30, 172 30, 172 100 
+             L 172 176 
+             Q 154 162, 136 176 
+             T 100 176 
+             T 64 176 
+             T 28 176 
              Z"
-          fill="url(#ghostGradient)"
-          filter="url(#ghostGlow)"
-          className={activeExpression === 'scared' ? 'animate-pulse' : ''}
+          fill="url(#ghostBodyLight)"
+          stroke="var(--border)"
+          strokeWidth="2"
+          className="transition-all duration-300"
         />
 
-        {/* Ghost Outline */}
+        {/* Subtle Archival Stitch Accent */}
         <path
-          d="M 20 100 
-             C 20 20, 180 20, 180 100 
-             L 180 180 
-             Q 160 160, 140 180 
-             T 100 180 
-             T 60 180 
-             T 20 180 
-             Z"
-          stroke="#cbd5e1"
-          strokeWidth="1.5"
+          d="M 38 102 C 38 45, 162 45, 162 102"
+          stroke="var(--border-subtle)"
+          strokeWidth="1"
+          strokeDasharray="3 3"
           fill="none"
         />
 
         {/* Ghost Face */}
         <g id="ghost-face">
           {/* Eye Sockets */}
-          <circle cx="68" cy={config.eyeY} r="16" fill="#f8fafc" />
-          <circle cx="132" cy={config.eyeY} r="16" fill="#f8fafc" />
+          <circle cx="72" cy={config.eyeY} r="14" fill="var(--surface-tertiary)" />
+          <circle cx="128" cy={config.eyeY} r="14" fill="var(--surface-tertiary)" />
 
           {/* Left Eye Pupil with Mouse Following */}
           <circle
-            cx={68 + pupilOffset.x}
+            cx={72 + pupilOffset.x}
             cy={config.eyeY + pupilOffset.y}
-            r={11 * config.eyeScale}
-            fill="#0f172a"
-            className={`${blinking ? 'animate-blink' : ''} transition-transform duration-75`}
+            r={9 * config.eyeScale}
+            fill="var(--text)"
+            className={`${blinking ? 'scale-y-[0.1]' : ''} transition-transform duration-75`}
+            style={{ transformOrigin: '72px 92px' }}
           />
 
           {/* Right Eye Pupil with Mouse Following */}
           <circle
-            cx={132 + pupilOffset.x}
+            cx={128 + pupilOffset.x}
             cy={config.eyeY + pupilOffset.y}
-            r={11 * config.eyeScale}
-            fill="#0f172a"
-            className={`${blinking ? 'animate-blink' : ''} transition-transform duration-75`}
+            r={9 * config.eyeScale}
+            fill="var(--text)"
+            className={`${blinking ? 'scale-y-[0.1]' : ''} transition-transform duration-75`}
+            style={{ transformOrigin: '128px 92px' }}
           />
 
-          {/* Mouth Expression */}
+          {/* Mouth */}
           <path
             d={config.mouthPath}
-            stroke="#0f172a"
-            strokeWidth="3.5"
+            stroke="var(--text)"
+            strokeWidth="2.75"
             strokeLinecap="round"
             fill="none"
             className="transition-all duration-300"
           />
 
-          {/* Eyebrows */}
+          {/* Thinking Eyebrows */}
           {activeExpression === 'thinking' && (
             <>
-              <path d="M 55 74 Q 68 68 81 74" stroke="#0f172a" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-              <path d="M 119 74 Q 132 68 145 74" stroke="#0f172a" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+              <path d="M 60 76 Q 72 72 84 76" stroke="var(--text)" strokeWidth="2" strokeLinecap="round" fill="none" />
+              <path d="M 116 76 Q 128 72 140 76" stroke="var(--text)" strokeWidth="2" strokeLinecap="round" fill="none" />
             </>
           )}
 
+          {/* Scared Eyebrows */}
           {activeExpression === 'scared' && (
             <>
-              <path d="M 55 69 Q 68 64 81 69" stroke="#0f172a" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-              <path d="M 119 69 Q 132 64 145 69" stroke="#0f172a" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+              <path d="M 60 72 Q 72 68 84 72" stroke="var(--text)" strokeWidth="2" strokeLinecap="round" fill="none" />
+              <path d="M 116 72 Q 128 68 140 72" stroke="var(--text)" strokeWidth="2" strokeLinecap="round" fill="none" />
             </>
           )}
         </g>

@@ -186,6 +186,7 @@ export const ProjectProvider = ({ children }) => {
       salvageTags: projectData.salvageTags || [],
       links: projectData.links || { github: '', demo: '', notes: '' },
       nextSmallestStep: projectData.nextSmallestStep || '',
+      projectStructure: projectData.projectStructure || '',
       revisitAt: projectData.revisitAt || null,
       timeline: [
         {

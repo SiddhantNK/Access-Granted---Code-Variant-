@@ -1,258 +1,262 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, Search, Filter, TrendingUp, Clock, Moon, Sparkles, Sprout, Archive, FileText, Code2, Flame } from 'lucide-react';
+import { Plus, Search, Clock, Moon, Sparkles, Archive, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import GhostMascot from '../components/GhostMascot';
+import NewBurialModal from '../components/NewBurialModal';
 import { useProjects } from '../context/ProjectContext';
+import { useAuth } from '../context/AuthContext';
 
 /**
- * Dashboard - Main graveyard view
+ * Dashboard - The Graveyard
  * 
- * Shows:
- * - Time capsule due projects
- * - Resting projects
- * - Revived projects
- * - Quick actions
+ * Clean visual hierarchy:
+ * 1. Page title & concise description
+ * 2. Primary action: "New Burial" modal
+ * 3. Compact overview metrics (Resting, Time Capsules, Revived)
+ * 4. Categorized project cards with status badges and salvage tags
  */
 
 const Dashboard = () => {
   const { projects } = useProjects();
-  const [searchQuery, setSearchQuery] = useState('');
+  const { loginJustSucceeded, clearLoginSuccess } = useAuth();
+  const [burialModalOpen, setBurialModalOpen] = useState(false);
+  const [showEntranceGhost, setShowEntranceGhost] = useState(false);
+
+  useEffect(() => {
+    if (loginJustSucceeded) {
+      setShowEntranceGhost(true);
+      clearLoginSuccess();
+      const timer = setTimeout(() => {
+        setShowEntranceGhost(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [loginJustSucceeded, clearLoginSuccess]);
 
   const categorizedProjects = {
     timeCapsule: projects.filter((p) => p.revisitAt && new Date(p.revisitAt) <= new Date()),
-    resting: projects.filter((p) => p.status === 'Resting'),
-    revived: projects.filter((p) => p.status === 'Revived'),
+    resting: projects.filter((p) => p.status === 'Resting' || p.status === 'Fresh Grave'),
+    revived: projects.filter((p) => p.status === 'Revived' || p.status === 'Reborn'),
+  };
+
+  const getStatusBadgeStyle = (status) => {
+    switch (status) {
+      case 'Fresh Grave':
+        return 'bg-theme-gold-surface text-theme-gold border border-theme-gold/30';
+      case 'Revived':
+      case 'Reborn':
+        return 'bg-theme-accent-surface text-theme-accent border border-theme-accent/30';
+      case 'Resting':
+      default:
+        return 'bg-theme-surface-secondary text-theme-text-muted border border-theme-border';
+    }
   };
 
   const ProjectCard = ({ project }) => (
     <Link
       to={`/grave/${project.id}`}
-      className="bg-slate-800/50 hover:bg-slate-800/80 border border-purple-500/20 hover:border-purple-500/50 rounded-lg p-6 transition-all duration-200 hover:shadow-lg hover:shadow-purple-500/10 group"
+      className="block p-5 bg-theme-surface border border-theme-border hover:border-theme-accent/60 rounded-xl transition-all shadow-sm hover:shadow-md group"
     >
-      <div className="space-y-3">
-        <h3 className="text-lg font-semibold text-white group-hover:text-purple-300 transition-colors line-clamp-1">
-          {project.name}
-        </h3>
-        <p className="text-white/60 text-sm line-clamp-2">{project.epitaph}</p>
-        
-        <div className="flex items-center justify-between pt-2">
-          <div className="flex gap-2 flex-wrap">
-            {project.salvageTags.slice(0, 2).map((tag) => (
-              <span
-                key={tag}
-                className="px-2 py-1 bg-purple-500/20 text-purple-300 text-xs rounded"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-          <span
-            className={`text-xs font-medium px-2 py-1 rounded ${
-              project.status === 'Fresh Grave'
-                ? 'bg-cyan-500/20 text-cyan-300'
-                : project.status === 'Resting'
-                ? 'bg-gray-500/20 text-gray-300'
-                : 'bg-green-500/20 text-green-300'
-            }`}
-          >
-            {project.status}
+      <div className="flex items-start justify-between gap-3 mb-2.5">
+        <div className="min-w-0">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-theme-text-muted">
+            {project.category || 'Project'}
           </span>
+          <h3 className="text-base font-semibold text-theme-text group-hover:text-theme-accent transition-colors truncate">
+            {project.name}
+          </h3>
         </div>
+        <span className={`text-[11px] font-medium px-2 py-0.5 rounded-md flex-shrink-0 ${getStatusBadgeStyle(project.status)}`}>
+          {project.status}
+        </span>
+      </div>
+
+      <p className="text-xs text-theme-text-muted line-clamp-2 leading-relaxed mb-4">
+        {project.epitaph || project.originalIdea}
+      </p>
+
+      {/* Tags & Action */}
+      <div className="flex items-center justify-between pt-3 border-t border-theme-border/60 text-xs">
+        <div className="flex gap-1.5 flex-wrap">
+          {project.salvageTags.slice(0, 2).map((tag) => (
+            <span
+              key={tag}
+              className="px-2 py-0.5 bg-theme-surface-secondary text-theme-text-muted text-[11px] font-mono rounded"
+            >
+              {tag}
+            </span>
+          ))}
+          {project.salvageTags.length > 2 && (
+            <span className="text-[10px] text-theme-text-subtle self-center">
+              +{project.salvageTags.length - 2}
+            </span>
+          )}
+        </div>
+        <span className="text-theme-text-subtle group-hover:text-theme-accent flex items-center gap-0.5 transition-colors text-[11px] font-medium">
+          View Dossier <ArrowUpRight className="w-3 h-3" />
+        </span>
       </div>
     </Link>
   );
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white relative overflow-hidden">
+    <div className="min-h-screen bg-theme-bg text-theme-text transition-colors duration-200">
       
-      {/* Ambient background glows */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[130px]" />
-        <div className="absolute bottom-10 left-10 w-[28rem] h-[28rem] bg-indigo-600/10 rounded-full blur-[140px]" />
-      </div>
-
-      {/* Atmospheric floating aesthetic icons directly on the screen */}
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none">
-        <div className="absolute top-28 left-[5%] text-purple-400/20 animate-ambientDrift" style={{ animationDelay: '0s' }}>
-          <FileText className="w-6 h-6" />
-        </div>
-        <div className="absolute top-48 right-[7%] text-purple-400/20 animate-ambientDrift" style={{ animationDelay: '2s' }}>
-          <Archive className="w-5 h-5" />
-        </div>
-        <div className="absolute bottom-40 left-[8%] text-purple-400/20 animate-ambientDrift" style={{ animationDelay: '3.5s' }}>
-          <Sparkles className="w-5 h-5" />
-        </div>
-        <div className="absolute top-1/2 right-[4%] text-purple-400/15 animate-ambientDrift" style={{ animationDelay: '1.2s' }}>
-          <Clock className="w-6 h-6" />
-        </div>
-        <div className="absolute bottom-20 right-[15%] text-purple-400/20 animate-ambientDrift" style={{ animationDelay: '4.8s' }}>
-          <Flame className="w-5 h-5" />
-        </div>
-      </div>
-
       {/* Header Banner */}
-      <div className="bg-slate-900/60 border-b border-purple-500/20 backdrop-blur-xl sticky top-16 z-30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <section className="border-b border-theme-border bg-theme-surface">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="animate-slideUp">
-              <div className="flex items-center gap-2 mb-1">
-                <Archive className="w-6 h-6 text-purple-400" />
-                <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-white via-purple-100 to-purple-400 bg-clip-text text-transparent">
-                  Your Graveyard
-                </h1>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-theme-accent" />
+                <span className="text-xs font-mono uppercase tracking-wider text-theme-text-muted">
+                  Overview Registry
+                </span>
               </div>
-              <p className="text-white/50 text-sm">
+              <h1 className="text-3xl font-serif-title font-semibold text-theme-text mt-1">
+                The Graveyard
+              </h1>
+              <p className="text-xs sm:text-sm text-theme-text-muted mt-1">
                 {projects.length === 0
-                  ? 'No souls laid to rest yet'
-                  : `${projects.length} project${projects.length === 1 ? '' : 's'} preserved in peace`}
+                  ? 'No projects recorded in the archive yet.'
+                  : `${projects.length} project${projects.length === 1 ? '' : 's'} preserved in the vault.`}
               </p>
             </div>
             
-            <div className="flex items-center gap-3 animate-slideUp">
+            <div className="flex items-center gap-2.5 relative">
+              {showEntranceGhost && (
+                <div 
+                  className="animate-ghost-entrance flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-theme-surface-secondary border border-theme-border shadow-md pointer-events-none"
+                  aria-live="polite"
+                >
+                  <GhostMascot size="sm" expression="happy" animated={true} trackMouse={false} autoCycle={false} />
+                  <span className="text-[11px] font-mono text-theme-accent font-medium">Welcome back!</span>
+                </div>
+              )}
               <Link
                 to="/crypt"
-                className="bg-gradient-to-r from-purple-600 via-purple-500 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-5 py-2.5 rounded-xl font-medium flex items-center gap-2 transition-all duration-200 active:scale-95 shadow-lg shadow-purple-950/40 text-sm"
+                className="px-3.5 py-2 rounded-lg border border-theme-border text-xs font-medium text-theme-text hover:bg-theme-surface-secondary transition-colors"
+              >
+                Search Crypt
+              </Link>
+              <button
+                onClick={() => setBurialModalOpen(true)}
+                className="px-4 py-2 rounded-lg bg-theme-accent hover:bg-theme-accent-hover text-theme-accent-foreground text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm active:scale-95"
               >
                 <Plus className="w-4 h-4" />
-                Lay a Project to Rest
-              </Link>
+                <span>New Burial</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Metrics Row */}
+          <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-theme-border/60">
+            <div className="bg-theme-surface-secondary/60 p-3 rounded-lg border border-theme-border/60">
+              <p className="text-[11px] font-mono text-theme-text-muted uppercase">Resting</p>
+              <p className="text-xl font-serif-title font-semibold text-theme-text mt-0.5">{categorizedProjects.resting.length}</p>
+            </div>
+            <div className="bg-theme-surface-secondary/60 p-3 rounded-lg border border-theme-border/60">
+              <p className="text-[11px] font-mono text-theme-text-muted uppercase">Time Capsules Due</p>
+              <p className="text-xl font-serif-title font-semibold text-theme-gold mt-0.5">{categorizedProjects.timeCapsule.length}</p>
+            </div>
+            <div className="bg-theme-surface-secondary/60 p-3 rounded-lg border border-theme-border/60">
+              <p className="text-[11px] font-mono text-theme-text-muted uppercase">Revived</p>
+              <p className="text-xl font-serif-title font-semibold text-theme-accent mt-0.5">{categorizedProjects.revived.length}</p>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-10">
+      {/* Main Content Area */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         
         {projects.length === 0 ? (
-          // Empty State with floating ghost & quick actions
-          <div className="relative max-w-xl mx-auto my-12 p-8 sm:p-12 rounded-3xl bg-slate-900/40 border border-purple-500/20 backdrop-blur-xl text-center animate-fadeIn shadow-2xl">
-            <div className="relative inline-block mb-6">
-              <GhostMascot 
-                size="lg" 
-                expression="happy" 
-                animated={true}
-                className="mx-auto drop-shadow-[0_10px_20px_rgba(168,85,247,0.3)]"
-              />
-            </div>
-
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
-              The Crypt is Quiet
+          // Empty State
+          <div className="max-w-md mx-auto my-12 p-8 bg-theme-surface border border-theme-border rounded-2xl text-center shadow-sm">
+            <GhostMascot size="lg" expression="happy" animated={true} className="mx-auto mb-4" />
+            <h2 className="text-xl font-serif-title font-semibold text-theme-text mb-2">
+              The Crypt is Empty
             </h2>
-            <p className="text-white/60 text-sm sm:text-base mb-8 max-w-md mx-auto leading-relaxed">
-              No dead repos or abandoned hacks here yet. Whenever a project hits pause, bury it here with its context so your ideas never truly die.
+            <p className="text-xs sm:text-sm text-theme-text-muted mb-6 leading-relaxed">
+              Whenever an idea stalls, don&apos;t just close the tab. Document your learnings and lay it to rest with clean context.
             </p>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Link
-                to="/crypt"
-                className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-7 py-3 rounded-xl font-medium transition-all duration-200 active:scale-95 shadow-lg shadow-purple-900/30 text-sm"
-              >
-                Bury Your First Project
-              </Link>
-              <Link
-                to="/autopsy"
-                className="w-full sm:w-auto px-6 py-3 bg-white/5 hover:bg-white/10 text-purple-200 rounded-xl transition-all duration-200 text-sm border border-purple-500/20"
-              >
-                Explore Analytics
-              </Link>
-            </div>
+            <button
+              onClick={() => setBurialModalOpen(true)}
+              className="px-4 py-2.5 bg-theme-accent hover:bg-theme-accent-hover text-theme-accent-foreground text-xs font-semibold rounded-lg shadow-sm transition-all"
+            >
+              Document Your First Project
+            </button>
           </div>
         ) : (
-          <div className="space-y-12">
+          <div className="space-y-10">
             
-            {/* Time Capsule Section */}
+            {/* Time Capsules Section */}
             {categorizedProjects.timeCapsule.length > 0 && (
-              <section className="animate-slideUp">
-                <div className="flex items-center gap-2.5 mb-5">
-                  <div className="p-1.5 bg-amber-500/20 text-amber-300 rounded-lg border border-amber-500/30">
-                    <Clock className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h2 className="text-xl font-bold text-white">
-                      Time Capsules Ready to Open ({categorizedProjects.timeCapsule.length})
-                    </h2>
-                    <p className="text-xs text-white/50">Scheduled reminder date has arrived</p>
-                  </div>
+              <section className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-theme-gold" />
+                  <h2 className="text-base font-serif-title font-semibold text-theme-text">
+                    Time Capsules Ready to Revisit ({categorizedProjects.timeCapsule.length})
+                  </h2>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                  {categorizedProjects.timeCapsule.map((p, idx) => (
-                    <div key={p.id} style={{ animationDelay: `${idx * 50}ms` }} className="animate-scaleIn">
-                      <ProjectCard project={p} />
-                    </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {categorizedProjects.timeCapsule.map((p) => (
+                    <ProjectCard key={p.id} project={p} />
                   ))}
                 </div>
               </section>
             )}
 
-            {/* Resting Projects */}
+            {/* Resting Projects Section */}
             {categorizedProjects.resting.length > 0 && (
-              <section className="animate-slideUp" style={{ animationDelay: '100ms' }}>
-                <div className="flex items-center gap-2.5 mb-5">
-                  <div className="p-1.5 bg-purple-500/20 text-purple-300 rounded-lg border border-purple-500/30">
-                    <Moon className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h2 className="text-xl font-bold text-white">
-                      Resting Projects ({categorizedProjects.resting.length})
-                    </h2>
-                    <p className="text-xs text-white/50">Dormant repos awaiting decision or revival</p>
-                  </div>
+              <section className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <Moon className="w-4 h-4 text-theme-text-muted" />
+                  <h2 className="text-base font-serif-title font-semibold text-theme-text">
+                    Resting Projects ({categorizedProjects.resting.length})
+                  </h2>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                  {categorizedProjects.resting.map((p, idx) => (
-                    <div key={p.id} style={{ animationDelay: `${idx * 50}ms` }} className="animate-scaleIn">
-                      <ProjectCard project={p} />
-                    </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {categorizedProjects.resting.map((p) => (
+                    <ProjectCard key={p.id} project={p} />
                   ))}
                 </div>
               </section>
             )}
 
-            {/* Revived Projects */}
+            {/* Revived Section */}
             {categorizedProjects.revived.length > 0 && (
-              <section className="animate-slideUp" style={{ animationDelay: '200ms' }}>
-                <div className="flex items-center gap-2.5 mb-5">
-                  <div className="p-1.5 bg-emerald-500/20 text-emerald-300 rounded-lg border border-emerald-500/30">
-                    <Sparkles className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h2 className="text-xl font-bold text-white">
-                      Brought Back to Life ({categorizedProjects.revived.length})
-                    </h2>
-                    <p className="text-xs text-white/50">Projects reborn, pivoted, or back in active progress</p>
-                  </div>
+              <section className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-theme-accent" />
+                  <h2 className="text-base font-serif-title font-semibold text-theme-text">
+                    Brought Back to Life ({categorizedProjects.revived.length})
+                  </h2>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                  {categorizedProjects.revived.map((p, idx) => (
-                    <div key={p.id} style={{ animationDelay: `${idx * 50}ms` }} className="animate-scaleIn">
-                      <ProjectCard project={p} />
-                    </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {categorizedProjects.revived.map((p) => (
+                    <ProjectCard key={p.id} project={p} />
                   ))}
                 </div>
               </section>
             )}
 
-            {/* Quick Links */}
-            <section className="flex flex-wrap gap-4 pt-6 border-t border-purple-500/10 animate-slideUp" style={{ animationDelay: '300ms' }}>
-              <Link
-                to="/crypt"
-                className="flex items-center gap-2 px-5 py-2.5 bg-slate-900/60 hover:bg-slate-800/80 text-white/80 hover:text-white rounded-xl transition-all duration-200 text-sm border border-purple-500/20"
-              >
-                <Search className="w-4 h-4 text-purple-400" />
-                Browse Crypt Archives
+            {/* Bottom Actions */}
+            <div className="pt-6 border-t border-theme-border flex items-center justify-between text-xs text-theme-text-muted">
+              <span>Looking for historical statistics?</span>
+              <Link to="/autopsy" className="text-theme-accent font-semibold hover:underline">
+                View Full Autopsy Report →
               </Link>
-              <Link
-                to="/autopsy"
-                className="flex items-center gap-2 px-5 py-2.5 bg-slate-900/60 hover:bg-slate-800/80 text-white/80 hover:text-white rounded-xl transition-all duration-200 text-sm border border-purple-500/20"
-              >
-                <TrendingUp className="w-4 h-4 text-purple-400" />
-                Autopsy & Abandonment Analytics
-              </Link>
-            </section>
+            </div>
           </div>
         )}
-      </div>
+      </main>
+
+      {/* Burial Modal */}
+      <NewBurialModal 
+        isOpen={burialModalOpen} 
+        onClose={() => setBurialModalOpen(false)} 
+      />
     </div>
   );
 };

@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Ghost } from 'lucide-react';
 
 // Providers
 import ThemeProvider from './context/ThemeContext';
@@ -11,6 +10,7 @@ import ProjectProvider from './context/ProjectContext';
 // Components
 import IntroWalkthrough from './components/IntroWalkthrough';
 import Navbar from './components/Navbar';
+import RoamingGhost from './components/RoamingGhost';
 import { useIntro } from './context/IntroContext';
 
 // Pages
@@ -30,10 +30,10 @@ const ProtectedRoute = ({ element }) => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
+      <div className="min-h-screen bg-theme-bg flex items-center justify-center">
         <div className="text-center">
-          <Ghost className="w-8 h-8 text-purple-400 animate-spin mx-auto" />
-          <p className="text-white/60 mt-4 text-xs font-medium">Entering Crypt...</p>
+          <div className="w-8 h-8 border-2 border-theme-border border-t-theme-accent rounded-full animate-spin mx-auto" />
+          <p className="text-theme-text-muted mt-4 text-xs font-mono">Entering the Archive...</p>
         </div>
       </div>
     );
@@ -55,6 +55,7 @@ const AppContent = () => {
       <Router>
         {/* Show Navbar only to authenticated users */}
         {user && <Navbar />}
+        {user && <RoamingGhost />}
 
         <Routes>
           {/* Public Route - Landing Page */}

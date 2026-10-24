@@ -2,86 +2,211 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Smooth scrolling and base typography */
+/* ============================================
+   DESIGN SYSTEM — Semantic Color Tokens
+   Warm Archive / Ink & Moss Palette
+   ============================================ */
+:root {
+  /* Light: Warm Parchment + Ink + Botanical Moss */
+  --bg: #F5F1E8;
+  --surface: #FFFEFA;
+  --surface-secondary: #F0EBE0;
+  --surface-tertiary: #E6E0D4;
+  --text: #252820;
+  --text-muted: #55594E;
+  --text-subtle: #888D80;
+  --border: #D8D1C3;
+  --border-subtle: #E8E2D8;
+  --accent: #52664B;
+  --accent-hover: #3E5038;
+  --accent-surface: #E3EBDC;
+  --accent-foreground: #FFFFFF;
+  --gold: #96713A;
+  --gold-surface: #F5EDD8;
+  --destructive: #8B3333;
+  --destructive-surface: #F5E8E8;
+  --ring: rgba(82, 102, 75, 0.4);
+  --shadow-sm: 0 1px 3px rgba(37, 40, 32, 0.07);
+  --shadow-md: 0 4px 14px rgba(37, 40, 32, 0.09);
+  --shadow-lg: 0 12px 36px rgba(37, 40, 32, 0.12);
+  --ghost-body: #EFEBE4;
+  --ghost-stroke: #C8C3BB;
+  --ghost-eye: #252820;
+}
+
+.dark {
+  /* Dark: Deep Charcoal + Sage Moss + Aged Brass */
+  --bg: #191C19;
+  --surface: #242824;
+  --surface-secondary: #2C312B;
+  --surface-tertiary: #353A34;
+  --text: #F2EEE3;
+  --text-muted: #C4C7B8;
+  --text-subtle: #7D8278;
+  --border: #41463F;
+  --border-subtle: #333830;
+  --accent: #B9C9A5;
+  --accent-hover: #CDD9BB;
+  --accent-surface: #2A3328;
+  --accent-foreground: #191C19;
+  --gold: #D8B978;
+  --gold-surface: #332E1F;
+  --destructive: #D97070;
+  --destructive-surface: #2E1F1F;
+  --ring: rgba(185, 201, 165, 0.4);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
+  --shadow-lg: 0 16px 44px rgba(0,0,0,0.65);
+  --ghost-body: #3A3F38;
+  --ghost-stroke: #4F5549;
+  --ghost-eye: #F2EEE3;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
 html {
   scroll-behavior: smooth;
+  background-color: var(--bg);
+  color: var(--text);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* Light / Mist Theme adjustments */
-html:not(.dark) {
-  background-color: #f8fafc;
-  color: #0f172a;
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-html:not(.dark) .bg-slate-950,
-html:not(.dark) .bg-slate-900 {
-  background-color: #f1f5f9 !important;
+/* ============================================
+   SCROLLBAR — Restrained, theme-aware
+   ============================================ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--surface-secondary); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-subtle); }
+
+/* ============================================
+   TEXT SELECTION
+   ============================================ */
+::selection {
+  background-color: var(--accent-surface);
+  color: var(--text);
 }
 
-html:not(.dark) .bg-slate-900\/60,
-html:not(.dark) .bg-slate-900\/70,
-html:not(.dark) .bg-slate-800\/50 {
-  background-color: rgba(255, 255, 255, 0.85) !important;
-  color: #1e293b;
-}
-
-html:not(.dark) .text-white {
-  color: #0f172a !important;
-}
-
-html:not(.dark) .text-white\/60,
-html:not(.dark) .text-white\/50,
-html:not(.dark) .text-white\/70 {
-  color: #475569 !important;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.5);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(147, 51, 234, 0.3);
+/* ============================================
+   FOCUS RING — Accessible, understated
+   ============================================ */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
   border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(147, 51, 234, 0.5);
+button { cursor: pointer; }
+
+/* ============================================
+   TYPOGRAPHY — Editorial Serif Utilities
+   ============================================ */
+.font-serif-editorial { font-family: 'Newsreader', Georgia, serif; }
+.font-serif-title     { font-family: 'Fraunces', Georgia, serif; }
+.font-cinzel          { font-family: 'Cinzel', serif; }
+
+/* ============================================
+   GHOST ANIMATIONS
+   ============================================ */
+
+/* Gentle idle float — used for inline ghost placements */
+@keyframes ghostFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-5px); }
 }
 
-/* Selection color */
-::selection {
-  background-color: rgba(147, 51, 234, 0.3);
-  color: inherit;
+/* Entrance: fade + rise from slightly below */
+@keyframes ghostEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 }
 
-/* Gradient text utility */
-.gradient-text {
-  @apply bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent;
+/* Page-roaming ghost drift — smooth bezier wander */
+@keyframes roamDrift {
+  0%   { transform: translate(0px, 0px) rotate(0deg); }
+  20%  { transform: translate(18px, -14px) rotate(2deg); }
+  40%  { transform: translate(-12px, -22px) rotate(-1.5deg); }
+  60%  { transform: translate(22px, -8px) rotate(1deg); }
+  80%  { transform: translate(-8px, -18px) rotate(-2deg); }
+  100% { transform: translate(0px, 0px) rotate(0deg); }
 }
 
-/* Glass morphism effect */
-.glass {
-  @apply backdrop-blur-md bg-white/10 border border-white/20;
+/* Flee animation — quick jump to new position */
+@keyframes fleePop {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(0.85); }
+  60%  { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }
 
-/* Smooth transitions */
-* {
-  @apply transition-colors duration-200;
+/* Blink eyelid close */
+@keyframes blink {
+  0%, 88%, 100% { transform: scaleY(1); }
+  93%            { transform: scaleY(0.08); }
 }
 
-/* Remove default button styles */
-button {
-  @apply cursor-pointer;
+/* Slide up utility */
+@keyframes slideUp {
+  from { transform: translateY(10px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
 }
 
-/* Reduce motion for accessibility */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ============================================
+   ANIMATION UTILITY CLASSES
+   ============================================ */
+.animate-ghost-float {
+  animation: ghostFloat 4.5s ease-in-out infinite;
+}
+
+.animate-ghost-float-slow {
+  animation: ghostFloat 5.5s ease-in-out infinite;
+}
+
+.animate-ghost-entrance {
+  animation: ghostEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-roam-drift {
+  animation: roamDrift 12s ease-in-out infinite;
+}
+
+.animate-flee-pop {
+  animation: fleePop 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-out;
+}
+
+/* ============================================
+   REDUCED MOTION — Accessibility
+   ============================================ */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -92,55 +217,43 @@ button {
   }
 }
 
-/* Ambient Floating Animations for Ghost & Spooky Elements */
-@keyframes ambientDrift {
-  0%, 100% {
-    transform: translate(0px, 0px) rotate(0deg);
-  }
-  25% {
-    transform: translate(14px, -18px) rotate(2deg);
-  }
-  50% {
-    transform: translate(-10px, -26px) rotate(-2deg);
-  }
-  75% {
-    transform: translate(-16px, -10px) rotate(1deg);
-  }
+/* ============================================
+   MONOSPACE FIELD — Project Structure
+   ============================================ */
+.project-structure-field {
+  font-family: 'SF Mono', 'Fira Code', 'Fira Mono', 'Cascadia Code', Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  white-space: pre;
+  overflow-x: auto;
+  tab-size: 2;
+  background-color: var(--surface-secondary);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  resize: vertical;
+  min-height: 120px;
+  max-height: 360px;
 }
 
-@keyframes ghostFloatFollow {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-22px) rotate(3deg);
-  }
+.project-structure-field:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 0;
+  border-color: var(--accent);
 }
 
-@keyframes ghostOrbit {
-  0% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  33% {
-    transform: translate(30px, -25px) rotate(4deg);
-  }
-  66% {
-    transform: translate(-25px, -15px) rotate(-4deg);
-  }
-  100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
+/* ============================================
+   CARD & SURFACE UTILITIES
+   ============================================ */
+.card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
 }
 
-.animate-ambientDrift {
-  animation: ambientDrift 8s ease-in-out infinite;
+.card-hover:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-md);
 }
-
-.animate-ghostOrbit {
-  animation: ghostOrbit 10s ease-in-out infinite;
-}
-
-.animate-ghostFloatFollow {
-  animation: ghostFloatFollow 4.5s ease-in-out infinite;
-}
-

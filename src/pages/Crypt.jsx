@@ -138,7 +138,7 @@ const Crypt = () => {
             
             <button
               onClick={() => setBurialModalOpen(true)}
-              className="px-4 py-2 rounded-lg bg-theme-accent hover:bg-theme-accent-hover text-theme-accent-foreground text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm active:scale-95"
+              className="px-4 py-2 rounded-lg bg-theme-mint hover:bg-theme-mint-hover text-theme-mint-foreground text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm active:scale-95"
             >
               <Plus className="w-4 h-4" />
               <span>New Burial</span>

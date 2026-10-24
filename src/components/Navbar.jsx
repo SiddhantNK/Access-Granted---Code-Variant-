@@ -112,7 +112,7 @@ const Navbar = () => {
               {/* New Burial Fast Action */}
               <button
                 onClick={() => setBurialModalOpen(true)}
-                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-theme-accent hover:bg-theme-accent-hover text-theme-accent-foreground transition-all shadow-sm active:scale-95"
+                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-theme-mint hover:bg-theme-mint-hover text-theme-mint-foreground transition-all shadow-sm active:scale-95"
                 title="Bury an unfinished project"
               >
                 <Plus className="w-3.5 h-3.5" />

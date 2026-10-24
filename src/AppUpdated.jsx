@@ -10,7 +10,6 @@ import ProjectProvider from './context/ProjectContext';
 // Components
 import IntroWalkthrough from './components/IntroWalkthrough';
 import Navbar from './components/Navbar';
-import RoamingGhost from './components/RoamingGhost';
 import { useIntro } from './context/IntroContext';
 
 // Pages
@@ -55,7 +54,6 @@ const AppContent = () => {
       <Router>
         {/* Show Navbar only to authenticated users */}
         {user && <Navbar />}
-        {user && <RoamingGhost />}
 
         <Routes>
           {/* Public Route - Landing Page */}

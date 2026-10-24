@@ -132,7 +132,7 @@ export const IntroWalkthrough = ({ isOpen = true, onClose = () => {} }) => {
                   onClick={() => setStep(i)}
                   className={`h-1.5 rounded-full transition-all ${
                     i === step
-                      ? 'w-6 bg-theme-accent'
+                      ? 'w-6 bg-theme-mint'
                       : 'w-1.5 bg-theme-border hover:bg-theme-text-subtle'
                   }`}
                   aria-label={`Step ${i + 1}`}
@@ -149,19 +149,18 @@ export const IntroWalkthrough = ({ isOpen = true, onClose = () => {} }) => {
                 Skip
               </button>
 
-              {!isFirstStep && (
-                <button
-                  onClick={handlePrev}
-                  className="px-3 py-1.5 rounded-lg border border-theme-border text-xs text-theme-text hover:bg-theme-surface-secondary transition-colors"
-                >
-                  <ChevronLeft className="w-4 h-4 inline mr-0.5" />
-                  Back
-                </button>
-              )}
+              <button
+                onClick={handlePrev}
+                disabled={isFirstStep}
+                className="px-3 py-1.5 rounded-lg border border-theme-border text-xs text-theme-text hover:bg-theme-surface-secondary transition-colors disabled:opacity-35 disabled:cursor-not-allowed"
+              >
+                <ChevronLeft className="w-4 h-4 inline mr-0.5" />
+                Back
+              </button>
 
               <button
                 onClick={handleNext}
-                className="px-4 py-1.5 rounded-lg bg-theme-accent hover:bg-theme-accent-hover text-theme-accent-foreground text-xs font-semibold transition-all shadow-sm flex items-center gap-1"
+                className="px-4 py-1.5 rounded-lg bg-theme-mint hover:bg-theme-mint-hover text-theme-mint-foreground text-xs font-semibold transition-all shadow-sm flex items-center gap-1"
               >
                 <span>{isLastStep ? 'Enter Archive' : 'Next'}</span>
                 {!isLastStep && <ChevronRight className="w-3.5 h-3.5" />}

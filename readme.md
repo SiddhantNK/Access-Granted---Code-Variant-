@@ -133,35 +133,44 @@ The goal is not to replace project-management tools. The goal is to give unfinis
 <div align="center">
 
 
+<h3>Landing Page </h3>
   <img src="/Assests/authentication_pg.png" alt="Landing Page" width="800"/>
 
 
   <br/>
   <br/>
   <br/>
+  <br/>
+  <br/>
 
-
+<h3>Main Dashboard</h3>
   <img src="/Assests/main_dashboard.png" alt="Main Page" width="800"/>
 
 
   <br/>
   <br/>
   <br/>
-
+  <br/>
+  <br/>
+<h3>Drag and drop feature</h3>
 
 <img src="/Assests/Drag_and_drop.png" alt="The surprise challenge" width="800"/>
 
   <br/>
   <br/>
   <br/>
-
+  <br/>
+  <br/>
+<h3>Projects at a glance and their state</h3>
   <img src="/Assests/sample_project.png" alt="Sample project" width="800"/>
 
   
   <br/>
   <br/>
   <br/>
-
+  <br/>
+  <br/>
+<h3>Adding New project</h3>
 
 <img src="/Assests/creating_newburial.png" alt="Creating New Burial" width="800"/>
   

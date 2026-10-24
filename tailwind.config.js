@@ -26,6 +26,9 @@ export default {
           'gold-surface': 'var(--gold-surface)',
           destructive: 'var(--destructive)',
           'destructive-surface': 'var(--destructive-surface)',
+          overlay: 'var(--overlay)',
+          'destructive-foreground': 'var(--destructive-foreground)',
+          ring: 'var(--ring)',
         },
       },
       fontFamily: {

@@ -28,6 +28,8 @@
   --gold-surface: #F5EDD8;
   --destructive: #8B3333;
   --destructive-surface: #F5E8E8;
+  --overlay: rgba(22, 25, 21, 0.60);
+  --destructive-foreground: #FFFFFF;
   --ring: rgba(82, 102, 75, 0.4);
   --shadow-sm: 0 1px 3px rgba(37, 40, 32, 0.07);
   --shadow-md: 0 4px 14px rgba(37, 40, 32, 0.09);
@@ -59,6 +61,8 @@
   --gold-surface: #332E1F;
   --destructive: #D97070;
   --destructive-surface: #2E1F1F;
+  --overlay: rgba(0, 0, 0, 0.68);
+  --destructive-foreground: #191C19;
   --ring: rgba(185, 201, 165, 0.4);
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
   --shadow-md: 0 4px 16px rgba(0,0,0,0.5);

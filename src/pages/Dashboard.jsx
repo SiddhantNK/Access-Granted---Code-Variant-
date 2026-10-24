@@ -56,14 +56,14 @@ const Dashboard = () => {
   const ProjectCard = ({ project }) => (
     <Link
       to={`/grave/${project.id}`}
-      className="block p-5 bg-theme-surface border border-theme-border hover:border-theme-border-subtle rounded-xl transition-all shadow-sm group"
+      className="block p-5 bg-theme-surface border border-theme-border hover:border-theme-accent/50 rounded-xl transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 group"
     >
       <div className="flex items-start justify-between gap-3 mb-2.5">
         <div className="min-w-0">
           <span className="text-[10px] font-mono uppercase tracking-wider text-theme-text-muted">
             {project.category || 'Project'}
           </span>
-          <h3 className="text-base font-semibold text-theme-text group-hover:text-theme-accent transition-colors truncate">
+          <h3 className="text-base font-serif-title font-semibold text-theme-text group-hover:text-theme-accent transition-colors truncate">
             {project.name}
           </h3>
         </div>
@@ -72,7 +72,7 @@ const Dashboard = () => {
         </span>
       </div>
 
-      <p className="text-xs text-theme-text-muted line-clamp-2 leading-relaxed mb-4">
+      <p className="text-sm text-theme-text-muted line-clamp-2 leading-relaxed mb-4">
         {project.epitaph || project.originalIdea}
       </p>
 
@@ -204,6 +204,7 @@ const Dashboard = () => {
         ) : projects.length === 0 ? (
           // Restrained Empty State per spec
           <div className="max-w-md mx-auto my-14 p-8 bg-theme-surface border border-theme-border rounded-xl text-center shadow-sm space-y-3">
+            <GhostMascot size="md" expression="sad" animated={false} trackMouse={false} autoCycle={false} className="mx-auto" />
             <h2 className="text-xl font-serif-title font-semibold text-theme-text">
               Nothing buried yet.
             </h2>

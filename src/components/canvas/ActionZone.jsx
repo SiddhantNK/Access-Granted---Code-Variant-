@@ -105,11 +105,11 @@ const ActionZone = ({
             </div>
           )}
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-theme-text font-serif-title">
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-theme-text font-serif-title">
               {title}
             </h4>
             {subtitle && (
-              <p className="text-[10px] text-theme-text-muted leading-tight">
+              <p className="text-xs text-theme-text-muted leading-tight">
                 {subtitle}
               </p>
             )}
@@ -117,7 +117,7 @@ const ActionZone = ({
         </div>
 
         {badgeText && (
-          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-theme-surface-secondary border border-theme-border text-theme-text-muted">
+          <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-theme-surface-secondary border border-theme-border text-theme-text-muted">
             {badgeText}
           </span>
         )}

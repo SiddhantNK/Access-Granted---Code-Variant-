@@ -100,17 +100,26 @@ const LandingPage = () => {
 
             {/* Core Pillars */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-theme-border">
-              <div className="space-y-1">
+              <div className="space-y-2">
+                <div className="w-8 h-8 rounded-lg border border-theme-border bg-theme-surface text-theme-accent flex items-center justify-center">
+                  <ShieldCheck className="w-4 h-4" aria-hidden="true" />
+                </div>
                 <p className="text-xs font-mono uppercase tracking-wider text-theme-accent font-semibold">01. Preserve</p>
                 <h3 className="text-sm font-semibold text-theme-text">Capture Context</h3>
                 <p className="text-xs text-theme-text-muted">Save the exact mental state, architecture notes, and reason for pause.</p>
               </div>
-              <div className="space-y-1">
+              <div className="space-y-2">
+                <div className="w-8 h-8 rounded-lg border border-theme-border bg-theme-surface text-theme-accent flex items-center justify-center">
+                  <Archive className="w-4 h-4" aria-hidden="true" />
+                </div>
                 <p className="text-xs font-mono uppercase tracking-wider text-theme-accent font-semibold">02. Salvage</p>
                 <h3 className="text-sm font-semibold text-theme-text">Tag Components</h3>
                 <p className="text-xs text-theme-text-muted">Extract hooks, contracts, and UI patterns for your active projects.</p>
               </div>
-              <div className="space-y-1">
+              <div className="space-y-2">
+                <div className="w-8 h-8 rounded-lg border border-theme-border bg-theme-surface text-theme-accent flex items-center justify-center">
+                  <Compass className="w-4 h-4" aria-hidden="true" />
+                </div>
                 <p className="text-xs font-mono uppercase tracking-wider text-theme-accent font-semibold">03. Awaken</p>
                 <h3 className="text-sm font-semibold text-theme-text">Set Revival Paths</h3>
                 <p className="text-xs text-theme-text-muted">Schedule time capsules or restart with a smaller, sharper scope.</p>

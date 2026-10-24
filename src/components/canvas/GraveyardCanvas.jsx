@@ -20,6 +20,7 @@ import { useProjects } from '../../context/ProjectContext';
 import ActionZone from './ActionZone';
 import DraggableProjectCard from './DraggableProjectCard';
 import NewBurialModal from '../NewBurialModal';
+import GhostMascot from '../GhostMascot';
 
 /**
  * GraveyardCanvas - Canvas Protocol workspace with interactive drag-and-drop zones
@@ -288,6 +289,7 @@ const GraveyardCanvas = () => {
 
         {restingProjects.length === 0 ? (
           <div className="p-8 text-center border border-theme-border rounded-xl bg-theme-surface">
+            <GhostMascot size="md" expression="sad" animated={false} trackMouse={false} autoCycle={false} className="mx-auto mb-3" />
             <p className="text-xs text-theme-text-muted">
               No resting projects found. Drag a new card into New Burial above to lay one to rest.
             </p>
@@ -406,7 +408,7 @@ const GraveyardCanvas = () => {
 
       {/* Confirm Final Rest / Delete Modal */}
       {deleteConfirmProject && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-theme-overlay backdrop-blur-sm flex items-center justify-center p-4">
           <div className="max-w-md w-full bg-theme-surface border border-theme-border rounded-xl p-6 shadow-xl space-y-4">
             <div className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-lg bg-theme-destructive/10 text-theme-destructive flex items-center justify-center shrink-0">
@@ -433,7 +435,7 @@ const GraveyardCanvas = () => {
               <button
                 type="button"
                 onClick={handleConfirmDelete}
-                className="px-4 py-1.5 rounded-lg bg-theme-destructive hover:opacity-90 text-white text-xs font-semibold shadow-sm"
+                className="px-4 py-1.5 rounded-lg bg-theme-destructive hover:opacity-90 text-theme-destructive-foreground text-xs font-semibold shadow-sm"
               >
                 Permanently Clear Record
               </button>
@@ -444,7 +446,7 @@ const GraveyardCanvas = () => {
 
       {/* Record Progress Modal */}
       {progressModalProject && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-theme-overlay backdrop-blur-sm flex items-center justify-center p-4">
           <div className="max-w-lg w-full bg-theme-surface border border-theme-border rounded-xl p-6 shadow-xl space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-theme-border">
               <div>

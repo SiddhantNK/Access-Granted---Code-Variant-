@@ -40,7 +40,7 @@ const DraggableProjectCard = ({ project, onSelect, compact = false }) => {
       draggable
       onDragStart={handleDragStart}
       onClick={() => onSelect && onSelect(project)}
-      className="group relative cursor-grab active:cursor-grabbing p-4 bg-theme-surface border border-theme-border hover:border-theme-border-subtle rounded-xl shadow-sm hover:shadow-md transition-all duration-200 select-none flex flex-col justify-between"
+      className="group relative cursor-grab active:cursor-grabbing p-4 bg-theme-surface border border-theme-border hover:border-theme-accent/50 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 select-none flex flex-col justify-between"
     >
       <div>
         {/* Top Header */}
@@ -53,7 +53,7 @@ const DraggableProjectCard = ({ project, onSelect, compact = false }) => {
               <span className="text-[10px] font-mono uppercase tracking-wider text-theme-text-muted block truncate">
                 {project.category || 'Project'}
               </span>
-              <h3 className="text-sm font-semibold text-theme-text group-hover:text-theme-accent transition-colors truncate">
+              <h3 className="text-sm font-serif-title font-semibold text-theme-text group-hover:text-theme-accent transition-colors truncate">
                 {project.name}
               </h3>
             </div>
@@ -65,7 +65,7 @@ const DraggableProjectCard = ({ project, onSelect, compact = false }) => {
         </div>
 
         {/* Epitaph / Description */}
-        <p className="text-xs text-theme-text-muted line-clamp-2 leading-relaxed mb-3">
+        <p className="text-sm text-theme-text-muted line-clamp-2 leading-relaxed mb-3">
           {project.epitaph || project.originalIdea}
         </p>
       </div>

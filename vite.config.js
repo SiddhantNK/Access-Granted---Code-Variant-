@@ -7,9 +7,6 @@ export default defineConfig({
     port: 5173,
     open: true,
     strictPort: false,
-    watch: {
-      ignored: ['**/*.zip', '**/dist/**', '**/.git/**'],
-    },
   },
   build: {
     outDir: 'dist',
